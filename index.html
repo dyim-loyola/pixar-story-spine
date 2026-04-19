@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pixar Storytelling — Story Spine &amp; 22 Rules</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pixar Storytelling</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
     :root {
       --bg:#faf8f5; --bg2:#f2efe9; --bg3:#e8e4dc;
       --text:#1a1714; --text2:#5a5550; --text3:#9a9590;
-      --border:rgba(0,0,0,0.08); --border2:rgba(0,0,0,0.15);
+      --border:rgba(0,0,0,0.08); --border2:rgba(0,0,0,0.16);
       --radius:4px;
       --serif:'Lora',Georgia,serif;
       --sans:'DM Sans',sans-serif;
@@ -20,148 +20,75 @@
     @media(prefers-color-scheme:dark){:root{
       --bg:#1a1814; --bg2:#222018; --bg3:#2c2a22;
       --text:#e8e4dc; --text2:#9a9588; --text3:#5a5650;
-      --border:rgba(255,255,255,0.08); --border2:rgba(255,255,255,0.15);
+      --border:rgba(255,255,255,0.08); --border2:rgba(255,255,255,0.16);
     }}
-
     body { font-family:var(--sans); background:var(--bg); color:var(--text); min-height:100vh; }
 
+    /* ── Site nav ── */
+    .site-nav { max-width:860px; margin:0 auto; padding:1rem 2rem; display:flex; align-items:center; justify-content:space-between; border-bottom:0.5px solid var(--border); }
+    .nav-brand { font-family:var(--serif); font-size:0.95rem; color:var(--text); text-decoration:none; font-style:italic; }
+    .nav-links { display:flex; gap:0.25rem; }
+    .nav-link { font-size:0.78rem; font-weight:500; color:var(--text3); text-decoration:none; padding:0.3rem 0.7rem; border-radius:var(--radius); transition:background .13s,color .13s; }
+    .nav-link:hover { background:var(--bg2); color:var(--text2); }
+    .nav-link.active { color:var(--text); background:var(--bg2); }
+
     /* ── Hero ── */
-    .hero {
-      max-width:860px; margin:0 auto; padding:4rem 2rem 3rem;
-      border-bottom:0.5px solid var(--border2);
-    }
-    .hero-eyebrow {
-      font-size:0.7rem; font-weight:500; letter-spacing:.12em;
-      text-transform:uppercase; color:var(--text3); margin-bottom:1rem;
-    }
-    .hero h1 {
-      font-family:var(--serif); font-size:clamp(2rem,5vw,3.2rem);
-      font-weight:400; line-height:1.15; letter-spacing:-0.02em;
-      color:var(--text); margin-bottom:1.25rem;
-    }
-    .hero-body {
-      font-size:0.95rem; color:var(--text2); line-height:1.8;
-      max-width:580px; margin-bottom:1.5rem;
-    }
+    .hero { max-width:860px; margin:0 auto; padding:3.5rem 2rem 3rem; border-bottom:0.5px solid var(--border2); }
+    .hero-eyebrow { font-size:0.68rem; font-weight:500; letter-spacing:.12em; text-transform:uppercase; color:var(--text3); margin-bottom:0.9rem; }
+    .hero h1 { font-family:var(--serif); font-size:clamp(2rem,5vw,3.2rem); font-weight:400; line-height:1.15; letter-spacing:-0.02em; color:var(--text); margin-bottom:1.1rem; }
+    .hero-body { font-size:0.92rem; color:var(--text2); line-height:1.8; max-width:540px; }
     .hero-body a { color:var(--text); text-decoration:underline; text-underline-offset:2px; }
-    .hero-body a:hover { color:var(--text2); }
-    .hero-links {
-      display:flex; gap:1rem; flex-wrap:wrap;
-    }
-    .hero-link {
-      font-size:0.82rem; font-weight:500; color:var(--text2);
-      text-decoration:none; padding:0.45rem 1rem;
-      border:0.5px solid var(--border2); border-radius:var(--radius);
-      transition:background .14s, color .14s;
-    }
-    .hero-link:hover { background:var(--bg2); color:var(--text); }
-    .hero-link.primary {
-      background:var(--text); color:var(--bg);
-      border-color:var(--text);
-    }
-    .hero-link.primary:hover { opacity:0.85; }
 
-    /* ── Sections ── */
-    section {
-      max-width:860px; margin:0 auto;
-      padding:3rem 2rem;
-      border-bottom:0.5px solid var(--border);
-    }
-    .section-eyebrow {
-      font-size:0.68rem; font-weight:500; letter-spacing:.12em;
-      text-transform:uppercase; color:var(--text3); margin-bottom:0.75rem;
-    }
-    section h2 {
-      font-family:var(--serif); font-size:clamp(1.3rem,3vw,1.9rem);
-      font-weight:400; color:var(--text); margin-bottom:1rem; line-height:1.3;
-    }
-    .section-body {
-      font-size:0.9rem; color:var(--text2); line-height:1.8;
-      max-width:620px; margin-bottom:1.5rem;
-    }
+    /* ── Collapsible ── */
+    .collapsible { max-width:860px; margin:0 auto; border-bottom:0.5px solid var(--border2); }
+    .collapsible-trigger { width:100%; display:flex; align-items:center; justify-content:space-between; padding:1.3rem 2rem; background:none; border:none; cursor:pointer; text-align:left; gap:1rem; transition:background .13s; }
+    .collapsible-trigger:hover { background:var(--bg2); }
+    .trigger-left { display:flex; flex-direction:column; gap:3px; }
+    .trigger-eyebrow { font-size:0.63rem; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:var(--text3); }
+    .trigger-title { font-family:var(--serif); font-size:clamp(0.95rem,2.5vw,1.25rem); font-weight:400; color:var(--text); line-height:1.3; }
+    .trigger-right { display:flex; align-items:center; gap:0.6rem; flex-shrink:0; }
+    .trigger-badge { font-size:0.68rem; color:var(--text3); background:var(--bg2); border:0.5px solid var(--border2); border-radius:2px; padding:2px 7px; white-space:nowrap; }
+    .trigger-chevron { width:17px; height:17px; color:var(--text3); transition:transform .22s; flex-shrink:0; }
+    .collapsible.open .trigger-chevron { transform:rotate(180deg); }
+    .collapsible-body { display:none; padding:0 2rem 2.5rem; }
+    .collapsible.open .collapsible-body { display:block; }
+
+    /* ── Page controls ── */
+    .page-controls { max-width:860px; margin:0 auto; padding:0.6rem 2rem; display:flex; justify-content:flex-end; gap:0.4rem; border-bottom:0.5px solid var(--border); }
+    .ctrl-btn { font-size:0.72rem; color:var(--text3); background:none; border:0.5px solid var(--border2); border-radius:var(--radius); padding:3px 8px; cursor:pointer; transition:background .12s,color .12s; font-family:var(--sans); }
+    .ctrl-btn:hover { background:var(--bg2); color:var(--text2); }
+
+    /* ── Prose ── */
+    .section-body { font-size:0.9rem; color:var(--text2); line-height:1.8; max-width:600px; margin-bottom:1.2rem; }
     .section-body a { color:var(--text); text-decoration:underline; text-underline-offset:2px; }
+    .section-body strong { color:var(--text); font-weight:500; }
 
-    /* ── What is Pixar storytelling ── */
-    .overview-grid {
-      display:grid; grid-template-columns:1fr 1fr; gap:1px;
-      background:var(--border); border:0.5px solid var(--border2);
-      border-radius:var(--radius); overflow:hidden; margin-top:1.5rem;
-    }
-    @media(max-width:580px){ .overview-grid { grid-template-columns:1fr; } }
-    .overview-cell {
-      background:var(--bg); padding:1.25rem 1.4rem;
-    }
-    .overview-cell h3 {
-      font-size:0.8rem; font-weight:500; color:var(--text);
-      margin-bottom:0.4rem;
-    }
-    .overview-cell p {
-      font-size:0.82rem; color:var(--text2); line-height:1.7;
-    }
+    /* ── Overview grid ── */
+    .overview-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border2); border:0.5px solid var(--border2); border-radius:var(--radius); overflow:hidden; margin-top:1.25rem; }
+    @media(max-width:540px){ .overview-grid { grid-template-columns:1fr; } }
+    .overview-cell { background:var(--bg); padding:1.1rem 1.25rem; }
+    .overview-cell h3 { font-size:0.8rem; font-weight:500; color:var(--text); margin-bottom:0.35rem; }
+    .overview-cell p { font-size:0.79rem; color:var(--text2); line-height:1.7; }
 
     /* ── Video ── */
-    .video-wrap {
-      margin-top:2rem;
-      border-radius:var(--radius); overflow:hidden;
-      border:0.5px solid var(--border2);
-      background:#000;
-      aspect-ratio:16/9; width:100%;
-    }
-    .video-wrap iframe {
-      width:100%; height:100%; border:none; display:block;
-    }
-    .video-caption {
-      font-size:0.78rem; color:var(--text3); margin-top:0.6rem;
-      line-height:1.6;
-    }
+    .video-wrap { position:relative; width:100%; padding-bottom:56.25%; background:#000; border-radius:var(--radius); overflow:hidden; border:0.5px solid var(--border2); margin-bottom:0.6rem; }
+    .video-wrap iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:none; }
+    .video-caption { font-size:0.74rem; color:var(--text3); }
+    .video-caption a { color:var(--text3); text-decoration:underline; text-underline-offset:2px; }
 
-    /* ── Story Spine template ── */
-    .spine-template {
-      margin-top:1.75rem;
-      border:0.5px solid var(--border2);
-      border-radius:var(--radius);
-      overflow:hidden;
-    }
-    .spine-row {
-      display:grid; grid-template-columns:160px 1fr;
-      border-bottom:0.5px solid var(--border);
-    }
+    /* ── Story Spine table ── */
+    .spine-table { margin-top:1.5rem; border:0.5px solid var(--border2); border-radius:var(--radius); overflow:hidden; }
+    .spine-row { display:grid; grid-template-columns:148px 1fr; border-bottom:0.5px solid var(--border); }
     .spine-row:last-child { border-bottom:none; }
-    @media(max-width:540px){ .spine-row { grid-template-columns:1fr; } }
-    .spine-stage {
-      padding:1rem 1.1rem;
-      background:var(--bg2);
-      border-right:0.5px solid var(--border);
-      display:flex; flex-direction:column; justify-content:center;
-    }
-    .spine-stage-num {
-      font-size:9px; font-weight:500; letter-spacing:.1em;
-      text-transform:uppercase; color:var(--text3); margin-bottom:3px;
-    }
-    .spine-stage-label {
-      font-family:var(--serif); font-size:0.9rem; font-style:italic;
-      color:var(--text); line-height:1.35;
-    }
-    .spine-content {
-      padding:1rem 1.25rem;
-      background:var(--bg);
-    }
-    .spine-prompt {
-      font-size:0.82rem; color:var(--text2); line-height:1.7;
-      margin-bottom:0.35rem;
-    }
-    .spine-placeholder {
-      font-family:var(--serif); font-style:italic;
-      color:var(--text); background:var(--bg2);
-      border-radius:2px; padding:0 3px;
-    }
-    .spine-example {
-      font-size:0.75rem; color:var(--text3); line-height:1.6;
-      padding-top:0.35rem; border-top:0.5px solid var(--border); margin-top:0.35rem;
-    }
-    .spine-example em { font-style:italic; color:var(--text2); }
-
-    /* stage accent colours */
+    @media(max-width:500px){ .spine-row { grid-template-columns:1fr; } }
+    .spine-stage { padding:0.9rem 1rem; background:var(--bg2); border-right:0.5px solid var(--border); display:flex; flex-direction:column; justify-content:center; }
+    .spine-stage-num { font-size:9px; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:var(--text3); margin-bottom:3px; }
+    .spine-stage-label { font-family:var(--serif); font-size:0.86rem; font-style:italic; color:var(--text); line-height:1.3; }
+    .spine-content { padding:0.85rem 1rem; background:var(--bg); }
+    .spine-prompt { font-size:0.81rem; color:var(--text2); line-height:1.7; margin-bottom:0.3rem; }
+    .ph { font-family:var(--serif); font-style:italic; color:var(--text); background:var(--bg2); border-radius:2px; padding:0 3px; }
+    .spine-eg { font-size:0.73rem; color:var(--text3); line-height:1.6; padding-top:0.3rem; border-top:0.5px solid var(--border); margin-top:0.3rem; }
+    .spine-eg em { font-style:italic; color:var(--text2); }
     .s1 .spine-stage { border-left:3px solid var(--c1); }
     .s2 .spine-stage { border-left:3px solid var(--c2); }
     .s3 .spine-stage { border-left:3px solid var(--c3); }
@@ -169,412 +96,211 @@
     .s5 .spine-stage { border-left:3px solid var(--c5); }
     .s6 .spine-stage { border-left:3px solid var(--c1); }
 
-    /* ── Interactive arc tabs ── */
-    .tabs-wrap {
-      max-width:860px; margin:0 auto;
-      border-bottom:0.5px solid var(--border2);
+    /* ── Templates CTA ── */
+    .cta-band { max-width:860px; margin:0 auto; }
+    .cta-inner {
+      margin:0; padding:2.5rem 2rem;
+      display:grid; grid-template-columns:1fr auto;
+      align-items:center; gap:2rem;
+      background:var(--text); border-radius:0;
     }
-    .tabs {
-      display:flex; gap:0; padding:0 2rem;
-      overflow-x:auto; scrollbar-width:none;
+    @media(max-width:540px){ .cta-inner { grid-template-columns:1fr; } }
+    .cta-eyebrow { font-size:0.65rem; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,0.5); margin-bottom:0.4rem; }
+    .cta-title { font-family:var(--serif); font-size:1.3rem; font-weight:400; color:#fff; margin-bottom:0.5rem; line-height:1.3; }
+    .cta-desc { font-size:0.82rem; color:rgba(255,255,255,0.65); line-height:1.65; }
+    .cta-btn {
+      display:inline-block; white-space:nowrap;
+      font-size:0.82rem; font-weight:500;
+      background:#fff; color:var(--text);
+      text-decoration:none; padding:0.6rem 1.3rem;
+      border-radius:var(--radius); border:none;
+      transition:opacity .14s;
     }
-    .tabs::-webkit-scrollbar { display:none; }
-    .tab {
-      padding:0.75rem 1.3rem; font-family:var(--sans);
-      font-size:0.82rem; font-weight:500; color:var(--text3);
-      cursor:pointer; border:none; background:none;
-      border-bottom:2px solid transparent; margin-bottom:-0.5px;
-      white-space:nowrap; transition:color .15s,border-color .15s;
-      user-select:none;
-    }
-    .tab:hover { color:var(--text2); }
-    .tab.active { color:var(--text); border-bottom-color:var(--text); }
+    .cta-btn:hover { opacity:0.88; }
 
-    /* ── Arc panel ── */
-    main { max-width:860px; margin:0 auto; padding:0 2rem 5rem; }
-    .tab-panel { display:none; padding-top:2.5rem; }
-    .tab-panel.active { display:block; }
-
-    #hint { font-size:0.78rem; color:var(--text3); text-align:center; margin:0 0 1rem; }
-    #panel {
-      background:var(--bg); border:0.5px solid var(--border2);
-      border-radius:var(--radius); padding:1.2rem 1.4rem;
-      display:none; animation:fadeUp .16s ease;
-    }
-    @keyframes fadeUp { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:none} }
-    #panel-label { font-size:0.68rem; font-weight:500; letter-spacing:.07em; text-transform:uppercase; color:var(--text3); margin-bottom:3px; }
-    #panel-title { font-size:1.05rem; font-weight:500; color:var(--text); margin-bottom:0.65rem; font-family:var(--serif); }
-    #panel-body  { font-size:0.88rem; color:var(--text2); line-height:1.75; margin-bottom:0.8rem; }
-    #panel-example { font-size:0.83rem; color:var(--text2); background:var(--bg2); border-left:2.5px solid var(--border2); padding:0.6rem 1rem; border-radius:0 4px 4px 0; line-height:1.65; }
-    #panel-example em { font-style:italic; color:var(--text); }
-    #dots { display:flex; justify-content:center; gap:7px; margin:1.2rem 0 0; }
-    .dot { width:26px; height:26px; border-radius:50%; border:1.5px solid var(--border2); background:var(--bg); cursor:pointer; font-size:10.5px; font-weight:500; color:var(--text2); display:flex; align-items:center; justify-content:center; transition:all .14s; }
-    .dot:hover { background:var(--bg2); }
-
-    /* ref cards */
-    .ref-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(175px,1fr)); gap:8px; margin-top:2rem; }
-    .ref-card { background:var(--bg2); border:0.5px solid var(--border); border-radius:var(--radius); padding:0.9rem 1rem; cursor:pointer; transition:background .13s; }
-    .ref-card:hover { background:var(--bg3); }
-    .ref-card-num { font-size:10px; color:var(--text3); margin-bottom:3px; }
-    .ref-card-title { font-size:0.82rem; font-weight:500; color:var(--text); margin-bottom:3px; font-family:var(--serif); font-style:italic; }
-    .ref-card-sub { font-size:0.78rem; color:var(--text2); line-height:1.5; }
-
-    /* 22 rules */
-    .rules-intro { font-size:0.88rem; color:var(--text2); line-height:1.75; margin-bottom:2rem; max-width:580px; }
-    .theme-block { margin-bottom:2.25rem; }
-    .theme-label { font-size:0.68rem; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:var(--text3); margin-bottom:0.75rem; padding-bottom:0.4rem; border-bottom:0.5px solid var(--border); }
-    .rules-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:8px; }
-    .rule-card { background:var(--bg2); border:0.5px solid var(--border); border-radius:var(--radius); padding:1rem; cursor:pointer; transition:background .13s,border-color .13s; }
-    .rule-card:hover { background:var(--bg3); border-color:var(--border2); }
-    .rule-card.expanded { background:var(--bg); border-color:var(--border2); }
-    .rule-num { font-size:10px; font-weight:500; color:var(--text3); margin-bottom:5px; }
-    .rule-short { font-size:0.85rem; font-weight:500; color:var(--text); line-height:1.45; }
-    .rule-detail { display:none; font-size:0.8rem; color:var(--text2); line-height:1.65; margin-top:0.6rem; padding-top:0.6rem; border-top:0.5px solid var(--border); }
-    .rule-card.expanded .rule-detail { display:block; }
-    .theme-character .rule-card.expanded { border-left:2.5px solid #534AB7; }
-    .theme-process   .rule-card.expanded { border-left:2.5px solid #0F6E56; }
-    .theme-craft     .rule-card.expanded { border-left:2.5px solid #BA7517; }
-    .theme-audience  .rule-card.expanded { border-left:2.5px solid #185FA5; }
-    .theme-character .theme-label { color:#534AB7; }
-    .theme-process   .theme-label { color:#0F6E56; }
-    .theme-craft     .theme-label { color:#BA7517; }
-    .theme-audience  .theme-label { color:#185FA5; }
-
-    .arc-node { cursor:pointer; }
-    .arc-node circle { transition:stroke-width .14s,fill .14s; }
-    .arc-node:hover circle { stroke-width:2.5 !important; }
-
-    footer { max-width:860px; margin:0 auto; padding:2rem; font-size:0.75rem; color:var(--text3); border-top:0.5px solid var(--border); text-align:center; line-height:1.8; }
+    /* ── Footer ── */
+    footer { max-width:860px; margin:0 auto; padding:1.75rem 2rem; font-size:0.73rem; color:var(--text3); border-top:0.5px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.75rem; }
     footer a { color:inherit; text-decoration:underline; text-underline-offset:2px; }
+    .footer-links { display:flex; gap:1rem; }
   </style>
 </head>
 <body>
 
-<!-- ═══ HERO ═══ -->
+<!-- Nav -->
+<nav class="site-nav">
+  <a class="nav-brand" href="index.html">Pixar Storytelling</a>
+  <div class="nav-links">
+    <a class="nav-link active" href="index.html">Home</a>
+    <a class="nav-link" href="explore.html">Explore</a>
+    <a class="nav-link" href="templates.html">Templates</a>
+  </div>
+</nav>
+
+<!-- Hero -->
 <div class="hero">
   <p class="hero-eyebrow">Systems Analysis &amp; Design — Storytelling Toolkit</p>
   <h1>Pixar Storytelling</h1>
   <p class="hero-body">
-    Pixar's approach to storytelling is one of the most studied narrative frameworks in the world — not because it comes from animation, but because it mirrors how people actually experience change. This toolkit introduces the core frameworks, explores the Story Spine structure in depth, and provides templates for applying these ideas to your own product presentations.
+    Pixar's storytelling philosophy — distilled by story artist <a href="https://www.aerogrammestudio.com/2013/03/07/pixars-22-rules-of-storytelling/" target="_blank">Emma Coats</a> — offers a teachable, repeatable approach to narrative that transfers far beyond filmmaking. Use this toolkit to understand the frameworks, then apply them to your own product presentation.
   </p>
-  <div class="hero-links">
-    <a class="hero-link primary" href="#story-spine">Explore the Story Spine</a>
-    <a class="hero-link" href="templates.html">2-Minute Demo Templates</a>
+</div>
+
+<!-- Page controls -->
+<div class="page-controls">
+  <button class="ctrl-btn" onclick="expandAll()">Expand all</button>
+  <button class="ctrl-btn" onclick="collapseAll()">Collapse all</button>
+</div>
+
+<!-- Section 1: Overview -->
+<div class="collapsible open" id="sec-overview">
+  <button class="collapsible-trigger" onclick="toggle('sec-overview')">
+    <div class="trigger-left">
+      <span class="trigger-eyebrow">Overview</span>
+      <span class="trigger-title">What is Pixar storytelling?</span>
+    </div>
+    <div class="trigger-right">
+      <span class="trigger-badge">4 key ideas</span>
+      <svg class="trigger-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+  </button>
+  <div class="collapsible-body">
+    <p class="section-body">
+      Emma Coats distilled Pixar's internal storytelling philosophy into 22 rules — practical principles that guide how every Pixar film is structured. At the heart of those rules is one insight: <strong>good stories are built on cause and consequence, not a sequence of events.</strong>
+    </p>
+    <div class="overview-grid">
+      <div class="overview-cell">
+        <h3>Why it works in the classroom</h3>
+        <p>The Story Spine replaces vague advice — "have a beginning, middle, and end" — with a repeatable method that enforces causal thinking at every stage.</p>
+      </div>
+      <div class="overview-cell">
+        <h3>Why it works for product pitches</h3>
+        <p>A product that solves a real problem has a story built into it. The Story Spine surfaces that story — moving from user context to disruption to resolution naturally.</p>
+      </div>
+      <div class="overview-cell">
+        <h3>The 22 Rules</h3>
+        <p>Beyond structure, the 22 Rules address the harder questions: how to write characters audiences care about, when to abandon material, and what makes a story worth telling.</p>
+      </div>
+      <div class="overview-cell">
+        <h3>From 2 minutes to 7 minutes</h3>
+        <p>The frameworks scale. The 2-minute demo uses the same causal logic as the full lifecycle presentation — the difference is scope, not structure.</p>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- ═══ WHAT IS PIXAR STORYTELLING ═══ -->
-<section id="overview">
-  <p class="section-eyebrow">Overview</p>
-  <h2>What is Pixar storytelling?</h2>
-  <p class="section-body">
-    Pixar story artist <a href="https://www.aerogrammestudio.com/2013/03/07/pixars-22-rules-of-storytelling/" target="_blank">Emma Coats</a> distilled the studio's internal storytelling philosophy into 22 rules — practical principles that guide how every Pixar film is structured, from character design to plot resolution. At the heart of those rules is a single insight: <strong>good stories are built on cause and consequence, not on a sequence of events.</strong>
-  </p>
-  <p class="section-body">
-    Two frameworks sit at the centre of this philosophy — the Story Spine, which provides a six-stage causal structure, and the 22 Rules, which offer guidance on character, craft, process, and audience. Together they form a teachable, repeatable approach to narrative that transfers far beyond filmmaking.
-  </p>
-  <div class="overview-grid">
-    <div class="overview-cell">
-      <h3>Why it works in the classroom</h3>
-      <p>The Story Spine replaces vague advice — "have a beginning, middle, and end" — with a repeatable method. It does not limit creativity; it channels it by enforcing causal thinking at every stage.</p>
+<!-- Section 2: Video -->
+<div class="collapsible open" id="sec-video">
+  <button class="collapsible-trigger" onclick="toggle('sec-video')">
+    <div class="trigger-left">
+      <span class="trigger-eyebrow">Watch</span>
+      <span class="trigger-title">The Story Spine in practice</span>
     </div>
-    <div class="overview-cell">
-      <h3>Why it works for product pitches</h3>
-      <p>A product that solves a real problem has a story built into it. The Story Spine gives you the structure to surface that story — moving from user context to disruption to resolution in a way that audiences follow naturally.</p>
+    <div class="trigger-right">
+      <span class="trigger-badge">Video · ~5 min</span>
+      <svg class="trigger-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
-    <div class="overview-cell">
-      <h3>The 22 Rules</h3>
-      <p>Beyond structure, the 22 Rules address the harder questions: how to write characters audiences care about, when to abandon material that isn't working, and what separates a story worth telling from one that isn't.</p>
+  </button>
+  <div class="collapsible-body">
+    <p class="section-body">Watch how the Story Spine is explained and applied before exploring the structure below.</p>
+    <div class="video-wrap">
+      <iframe width="560" height="315"
+        src="https://www.youtube.com/embed/Y34eshkxE5o?si=GVHhwAHVFF0W1QUm"
+        title="YouTube video player" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+      </iframe>
     </div>
-    <div class="overview-cell">
-      <h3>From 2 minutes to 7 minutes</h3>
-      <p>The frameworks scale. The 2-minute demo exercise uses the same causal logic as the full lifecycle presentation — the difference is scope, not structure. Mastering one prepares you for the other.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ STORY SPINE ═══ -->
-<section id="story-spine">
-  <p class="section-eyebrow">The Story Spine</p>
-  <h2>A structured approach to narrative</h2>
-  <p class="section-body">
-    The Story Spine was developed by improv teacher <a href="https://www.aerogrammestudio.com/2013/03/07/pixars-22-rules-of-storytelling/" target="_blank">Kenn Adams</a> and became central to Pixar's story development process. It provides six sentence starters that, when completed in sequence, produce a causally coherent story. The key word is <em>because</em> — every stage must follow logically from the one before it.
-  </p>
-  <p class="section-body">
-    Watch the video below to see the Story Spine explained and applied, then explore the interactive template to understand each stage in depth.
-  </p>
-
-  <div class="video-wrap">
-    <iframe
-      src="https://www.youtube.com/embed/Y34eshkxE5o"
-      title="Pixar Story Spine explained"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen>
-    </iframe>
-  </div>
-  <p class="video-caption">The Story Spine in practice — how Pixar uses a six-stage causal structure to build narrative momentum.</p>
-
-  <div class="spine-template">
-
-    <div class="spine-row s1">
-      <div class="spine-stage">
-        <span class="spine-stage-num">Stage 1</span>
-        <span class="spine-stage-label">"Once upon a time…"</span>
-      </div>
-      <div class="spine-content">
-        <p class="spine-prompt">Establish <span class="spine-placeholder">[who the story is about]</span>, <span class="spine-placeholder">[where they are]</span>, and <span class="spine-placeholder">[when]</span>. Anchor the audience so everything that follows has context.</p>
-        <p class="spine-example"><em>Finding Nemo:</em> Marlin is an anxious clownfish living in a sea anemone with his son Nemo, on a quiet coral reef.</p>
-      </div>
-    </div>
-
-    <div class="spine-row s2">
-      <div class="spine-stage">
-        <span class="spine-stage-num">Stage 2</span>
-        <span class="spine-stage-label">"Every day…"</span>
-      </div>
-      <div class="spine-content">
-        <p class="spine-prompt">Show <span class="spine-placeholder">[the character's normal routine]</span>. This baseline is what makes the disruption meaningful — without it, the inciting incident has nothing to push against.</p>
-        <p class="spine-example"><em>WALL-E:</em> Every day, WALL-E compacts trash alone on an abandoned Earth and watches Hello Dolly before sleeping.</p>
-      </div>
-    </div>
-
-    <div class="spine-row s3">
-      <div class="spine-stage">
-        <span class="spine-stage-num">Stage 3</span>
-        <span class="spine-stage-label">"Until one day…"</span>
-      </div>
-      <div class="spine-content">
-        <p class="spine-prompt">Something breaks the pattern. <span class="spine-placeholder">[The inciting incident]</span> does not need to be dramatic — it needs to be disruptive enough to force the character to act.</p>
-        <p class="spine-example"><em>Up:</em> Carl receives an order to vacate his home and move to a retirement community.</p>
-      </div>
-    </div>
-
-    <div class="spine-row s4">
-      <div class="spine-stage">
-        <span class="spine-stage-num">Stage 4</span>
-        <span class="spine-stage-label">"Because of that…"</span>
-      </div>
-      <div class="spine-content">
-        <p class="spine-prompt">The character responds — and <span class="spine-placeholder">[their response creates new problems]</span>. This causal link is what most presentations skip. Events must happen <em>because of</em> each other, not just after each other.</p>
-        <p class="spine-example"><em>Toy Story:</em> Because Buzz becomes Andy's favourite, Woody's jealousy leads to an accident that strands them both.</p>
-      </div>
-    </div>
-
-    <div class="spine-row s5">
-      <div class="spine-stage">
-        <span class="spine-stage-num">Stage 5</span>
-        <span class="spine-stage-label">"Because of that…"</span>
-      </div>
-      <div class="spine-content">
-        <p class="spine-prompt">The consequences compound. <span class="spine-placeholder">[A second cause-and-effect stage]</span> raises the stakes further. Longer stories may need several of these; shorter ones may need only one.</p>
-        <p class="spine-example"><em>The Incredibles:</em> Because Bob secretly returns to superhero work, his deception pulls the whole family into a far larger threat.</p>
-      </div>
-    </div>
-
-    <div class="spine-row s6">
-      <div class="spine-stage">
-        <span class="spine-stage-num">Stage 6</span>
-        <span class="spine-stage-label">"Until finally…"</span>
-      </div>
-      <div class="spine-content">
-        <p class="spine-prompt">A new equilibrium is established — not the same as before, but one that feels earned. <span class="spine-placeholder">[The resolution works because the chain of cause and consequence made it inevitable.]</span></p>
-        <p class="spine-example"><em>Inside Out:</em> Riley tells her parents how she truly feels — arriving not at happiness, but at a richer emotional world.</p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ═══ INTERACTIVE ARC + 22 RULES TABS ═══ -->
-<div class="tabs-wrap">
-  <div class="tabs">
-    <button class="tab active" onclick="switchTab('arc')">Interactive Arc</button>
-    <button class="tab" onclick="switchTab('rules')">22 Rules</button>
+    <p class="video-caption">Can't see the video? <a href="https://youtu.be/Y34eshkxE5o" target="_blank">Watch on YouTube →</a></p>
   </div>
 </div>
 
-<main>
-
-  <!-- Arc tab -->
-  <div class="tab-panel active" id="tab-arc">
-    <svg width="100%" viewBox="0 0 680 295" role="img" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:0.5rem">
-      <title>Pixar Story Spine narrative arc</title>
-      <desc>Six interactive stages plotted on a narrative tension arc.</desc>
-      <line x1="44" y1="44" x2="44" y2="255" stroke="var(--border)" stroke-width="0.5"/>
-      <line x1="44" y1="255" x2="644" y2="255" stroke="var(--border)" stroke-width="0.5"/>
-      <text x="22" y="255" font-size="10" fill="var(--text3)" font-family="var(--sans)" text-anchor="middle">Low</text>
-      <text x="22" y="58"  font-size="10" fill="var(--text3)" font-family="var(--sans)" text-anchor="middle">High</text>
-      <text x="14" y="155" font-size="10" fill="var(--text3)" font-family="var(--sans)" text-anchor="middle" transform="rotate(-90,14,155)">tension</text>
-      <text x="344" y="272" font-size="10" fill="var(--text3)" font-family="var(--sans)" text-anchor="middle">narrative progression →</text>
-      <path d="M70 232 C 148 232, 196 78, 258 78 C 314 78, 352 105, 396 137 C 440 169, 475 188, 528 102 C 555 62, 578 48, 618 50" fill="none" stroke="var(--border2)" stroke-width="1.5" stroke-dasharray="6 3"/>
-      <g class="arc-node" id="sn1" onclick="selectStage(1)">
-        <circle cx="70"  cy="232" r="27" fill="var(--bg)" stroke="#534AB7" stroke-width="1.5"/>
-        <text x="70"  y="228" text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#534AB7">Once upon</text>
-        <text x="70"  y="241" text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#534AB7">a time…</text>
-      </g>
-      <g class="arc-node" id="sn2" onclick="selectStage(2)">
-        <circle cx="180" cy="175" r="27" fill="var(--bg)" stroke="#0F6E56" stroke-width="1.5"/>
-        <text x="180" y="171" text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#0F6E56">Every</text>
-        <text x="180" y="184" text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#0F6E56">day…</text>
-      </g>
-      <g class="arc-node" id="sn3" onclick="selectStage(3)">
-        <circle cx="270" cy="78"  r="27" fill="var(--bg)" stroke="#993C1D" stroke-width="1.5"/>
-        <text x="270" y="74"  text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#993C1D">Until one</text>
-        <text x="270" y="87"  text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#993C1D">day…</text>
-      </g>
-      <g class="arc-node" id="sn4" onclick="selectStage(4)">
-        <circle cx="390" cy="137" r="27" fill="var(--bg)" stroke="#BA7517" stroke-width="1.5"/>
-        <text x="390" y="133" text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#BA7517">Because</text>
-        <text x="390" y="146" text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#BA7517">of that…</text>
-      </g>
-      <g class="arc-node" id="sn5" onclick="selectStage(5)">
-        <circle cx="492" cy="146" r="27" fill="var(--bg)" stroke="#185FA5" stroke-width="1.5"/>
-        <text x="492" y="142" text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#185FA5">Because</text>
-        <text x="492" y="155" text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#185FA5">of that…</text>
-      </g>
-      <g class="arc-node" id="sn6" onclick="selectStage(6)">
-        <circle cx="618" cy="50"  r="27" fill="var(--bg)" stroke="#534AB7" stroke-width="1.5"/>
-        <text x="618" y="46"  text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#534AB7">Until</text>
-        <text x="618" y="59"  text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#534AB7">finally…</text>
-      </g>
-    </svg>
-    <p id="hint">Click any stage on the arc to explore its role in the story</p>
-    <div id="panel">
-      <p id="panel-label"></p>
-      <p id="panel-title"></p>
-      <p id="panel-body"></p>
-      <p id="panel-example"></p>
+<!-- Section 3: Story Spine -->
+<div class="collapsible open" id="sec-spine">
+  <button class="collapsible-trigger" onclick="toggle('sec-spine')">
+    <div class="trigger-left">
+      <span class="trigger-eyebrow">The Story Spine</span>
+      <span class="trigger-title">A structured approach to narrative</span>
     </div>
-    <div id="dots">
-      <div class="dot" id="d1" onclick="selectStage(1)">1</div>
-      <div class="dot" id="d2" onclick="selectStage(2)">2</div>
-      <div class="dot" id="d3" onclick="selectStage(3)">3</div>
-      <div class="dot" id="d4" onclick="selectStage(4)">4</div>
-      <div class="dot" id="d5" onclick="selectStage(5)">5</div>
-      <div class="dot" id="d6" onclick="selectStage(6)">6</div>
+    <div class="trigger-right">
+      <span class="trigger-badge">6 stages</span>
+      <svg class="trigger-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
-    <div class="ref-grid">
-      <div class="ref-card" onclick="selectStage(1)"><p class="ref-card-num">Stage 1</p><p class="ref-card-title">"Once upon a time…"</p><p class="ref-card-sub">Establish who, where, and when</p></div>
-      <div class="ref-card" onclick="selectStage(2)"><p class="ref-card-num">Stage 2</p><p class="ref-card-title">"Every day…"</p><p class="ref-card-sub">Show the normal routine</p></div>
-      <div class="ref-card" onclick="selectStage(3)"><p class="ref-card-num">Stage 3</p><p class="ref-card-title">"Until one day…"</p><p class="ref-card-sub">The inciting incident</p></div>
-      <div class="ref-card" onclick="selectStage(4)"><p class="ref-card-num">Stage 4</p><p class="ref-card-title">"Because of that…"</p><p class="ref-card-sub">Cause and consequence</p></div>
-      <div class="ref-card" onclick="selectStage(5)"><p class="ref-card-num">Stage 5</p><p class="ref-card-title">"Because of that…"</p><p class="ref-card-sub">Stakes escalate</p></div>
-      <div class="ref-card" onclick="selectStage(6)"><p class="ref-card-num">Stage 6</p><p class="ref-card-title">"Until finally…"</p><p class="ref-card-sub">Resolution and new equilibrium</p></div>
-    </div>
-  </div>
-
-  <!-- 22 Rules tab -->
-  <div class="tab-panel" id="tab-rules">
-    <p class="rules-intro">Originally compiled by Pixar story artist Emma Coats. Click any card to read the full rule. Rules are grouped by theme. For the full original list, visit <a href="https://www.aerogrammestudio.com/2013/03/07/pixars-22-rules-of-storytelling/" target="_blank" style="color:var(--text);text-decoration:underline;text-underline-offset:2px;">aerogrammestudio.com</a>.</p>
-
-    <div class="theme-block theme-character">
-      <p class="theme-label">Character</p>
-      <div class="rules-grid">
-        <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 1</p><p class="rule-short">Admire trying, not just success</p><p class="rule-detail">You admire a character more for trying than for their successes. Effort and failure are more compelling than achievement alone — audiences root for struggle, not victory.</p></div>
-        <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 6</p><p class="rule-short">Throw the opposite at them</p><p class="rule-detail">Figure out what your character is good at or comfortable with, then throw the opposite at them and see how they cope. Constraint reveals character far better than comfort does.</p></div>
-        <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 13</p><p class="rule-short">Give characters opinions</p><p class="rule-detail">Passive, malleable characters might seem likable to write, but they are poison to an audience. Characters must want something and take positions — even wrong ones.</p></div>
-        <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 15</p><p class="rule-short">Ask how you would feel</p><p class="rule-detail">If you were your character in this situation, how would you feel? Honesty grounded in real emotion makes even unbelievable situations feel credible to an audience.</p></div>
-        <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 21</p><p class="rule-short">Identify with your characters</p><p class="rule-detail">You must identify with your characters and situations. You can't just write "cool" — ask what would make you actually behave that way. If you can't answer it, the audience won't buy it.</p></div>
+  </button>
+  <div class="collapsible-body">
+    <p class="section-body">
+      Six sentence starters, completed in sequence, produce a causally coherent story. The key word is <em>because</em> — every stage must follow logically from the one before it. Developed by improv teacher Kenn Adams and adopted by Pixar as a story development tool.
+    </p>
+    <div class="spine-table">
+      <div class="spine-row s1">
+        <div class="spine-stage"><span class="spine-stage-num">Stage 1</span><span class="spine-stage-label">"Once upon a time…"</span></div>
+        <div class="spine-content">
+          <p class="spine-prompt">Establish <span class="ph">[who]</span>, <span class="ph">[where]</span>, and <span class="ph">[when]</span>. Anchor the audience before anything is disrupted.</p>
+          <p class="spine-eg"><em>Finding Nemo:</em> Marlin is an anxious clownfish living in a sea anemone with his son Nemo on a quiet coral reef.</p>
+        </div>
       </div>
-    </div>
-
-    <div class="theme-block theme-process">
-      <p class="theme-label">Process</p>
-      <div class="rules-grid">
-        <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 3</p><p class="rule-short">Theme reveals itself at the end</p><p class="rule-detail">Aim for theme, but you usually only see what the story is really about once you reach the end. Write it, then rewrite with that clarity. Trying to theme-first often produces something airless.</p></div>
-        <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 7</p><p class="rule-short">Work out your ending first</p><p class="rule-detail">Come up with your ending before you figure out the middle. Endings are hard — get yours working early so everything you write points somewhere real.</p></div>
-        <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 8</p><p class="rule-short">Finish it and move on</p><p class="rule-detail">Finish your story and let it go, even if it is not perfect. Move on and do better next time. Done and imperfect beats endlessly revised and unfinished.</p></div>
-        <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 9</p><p class="rule-short">List what wouldn't happen next</p><p class="rule-detail">When you are stuck, make a list of what wouldn't happen next. Often the interesting path is hiding inside the discarded pile — the obvious choices block it.</p></div>
-        <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 11</p><p class="rule-short">Put the idea on paper</p><p class="rule-detail">Putting an idea on paper lets you start fixing it. If it stays in your head, it is unshareable and perfect and useless. The moment it is written, it becomes real enough to improve.</p></div>
-        <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 12</p><p class="rule-short">Discard your first five ideas</p><p class="rule-detail">Discount your first idea, and the second, third, fourth, and fifth. Get the obvious material out so you can surprise yourself. The interesting work starts after the predictable ideas are spent.</p></div>
-        <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 17</p><p class="rule-short">No work is wasted</p><p class="rule-detail">If something isn't working, let it go — but its useful parts can show up elsewhere. Work that doesn't fit the current story is often exactly right for a future one.</p></div>
+      <div class="spine-row s2">
+        <div class="spine-stage"><span class="spine-stage-num">Stage 2</span><span class="spine-stage-label">"Every day…"</span></div>
+        <div class="spine-content">
+          <p class="spine-prompt">Show <span class="ph">[the character's normal routine]</span>. This baseline makes the disruption meaningful.</p>
+          <p class="spine-eg"><em>WALL-E:</em> Every day, WALL-E compacts trash alone on an abandoned Earth and watches Hello Dolly before sleeping.</p>
+        </div>
       </div>
-    </div>
-
-    <div class="theme-block theme-craft">
-      <p class="theme-label">Craft</p>
-      <div class="rules-grid">
-        <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 4</p><p class="rule-short">Use the story spine</p><p class="rule-detail">"Once upon a time there was ___. Every day ___. One day ___. Because of that ___. Because of that ___. Until finally ___." This structure enforces causal thinking and gives any story a spine before you add flesh.</p></div>
-        <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 5</p><p class="rule-short">Simplify and combine</p><p class="rule-detail">Simplify and focus. Combine characters. Skip detours, even when it feels like you are losing good material. Complexity that doesn't serve the story is dead weight.</p></div>
-        <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 16</p><p class="rule-short">Make the stakes clear</p><p class="rule-detail">Give the audience reasons to root for the character. Show what happens if they fail. Keep raising the bar — stakes that plateau make stories feel safe, and safe stories lose people.</p></div>
-        <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 18</p><p class="rule-short">Know your core deeply</p><p class="rule-detail">You have to know your story's core and your characters deeply. "Just doing cool stuff" isn't enough. Cool without meaning deflates quickly once the novelty fades.</p></div>
-        <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 19</p><p class="rule-short">Coincidence in is fine, out is cheating</p><p class="rule-detail">Coincidences that get characters into trouble are great storytelling. Coincidences that get them out of trouble are cheating. The character must earn their way out.</p></div>
-        <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 22</p><p class="rule-short">Find the most economical telling</p><p class="rule-detail">What is the essence of your story — the most economical way to tell it? Once you know that, you can build outward. Everything in the story should be justifiable from that core.</p></div>
+      <div class="spine-row s3">
+        <div class="spine-stage"><span class="spine-stage-num">Stage 3</span><span class="spine-stage-label">"Until one day…"</span></div>
+        <div class="spine-content">
+          <p class="spine-prompt"><span class="ph">[The inciting incident]</span> breaks the pattern. It doesn't need to be dramatic — it needs to be disruptive enough to force action.</p>
+          <p class="spine-eg"><em>Up:</em> Carl receives an order to vacate his home and move to a retirement community.</p>
+        </div>
       </div>
-    </div>
-
-    <div class="theme-block theme-audience">
-      <p class="theme-label">Audience &amp; inspiration</p>
-      <div class="rules-grid">
-        <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 2</p><p class="rule-short">Think like an audience, not a writer</p><p class="rule-detail">Keep in mind what is interesting to you as an audience, not just what is fun to make or write. The writer's pleasure and the viewer's pleasure are not always the same thing.</p></div>
-        <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 10</p><p class="rule-short">Pull apart stories you love</p><p class="rule-detail">Identify what you like in the stories that move you. That is a part of you — and you can use it. Studying what works is not copying; it is learning your own taste.</p></div>
-        <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 14</p><p class="rule-short">Know why you must tell this story</p><p class="rule-detail">Ask why you must tell this story. The belief burning inside you that it feeds on is its heart. If you cannot answer this, the audience will feel the absence even if they cannot name it.</p></div>
-        <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 20</p><p class="rule-short">Rearrange a film you dislike</p><p class="rule-detail">Take apart a movie you don't like and rearrange its pieces into something you would like. The exercise builds structural instinct — bad films often have good ingredients in the wrong order.</p></div>
+      <div class="spine-row s4">
+        <div class="spine-stage"><span class="spine-stage-num">Stage 4</span><span class="spine-stage-label">"Because of that…"</span></div>
+        <div class="spine-content">
+          <p class="spine-prompt">The character responds — and <span class="ph">[their response creates new problems]</span>. Events must happen <em>because of</em> each other, not just after each other.</p>
+          <p class="spine-eg"><em>Toy Story:</em> Because Buzz becomes Andy's favourite, Woody's jealousy leads to an accident stranding them both.</p>
+        </div>
+      </div>
+      <div class="spine-row s5">
+        <div class="spine-stage"><span class="spine-stage-num">Stage 5</span><span class="spine-stage-label">"Because of that…"</span></div>
+        <div class="spine-content">
+          <p class="spine-prompt">The consequences compound. <span class="ph">[A second cause-and-effect stage]</span> raises the stakes further.</p>
+          <p class="spine-eg"><em>The Incredibles:</em> Because Bob secretly returns to superhero work, his deception pulls the whole family into a far larger threat.</p>
+        </div>
+      </div>
+      <div class="spine-row s6">
+        <div class="spine-stage"><span class="spine-stage-num">Stage 6</span><span class="spine-stage-label">"Until finally…"</span></div>
+        <div class="spine-content">
+          <p class="spine-prompt">A new equilibrium is established — not the same as before, but earned. <span class="ph">[The resolution feels inevitable because of the chain that preceded it.]</span></p>
+          <p class="spine-eg"><em>Inside Out:</em> Riley tells her parents how she truly feels — arriving not at happiness, but at a richer emotional world.</p>
+        </div>
       </div>
     </div>
   </div>
+</div>
 
-</main>
+<!-- Templates CTA — always visible, outside collapsible system -->
+<div class="cta-band">
+  <div class="cta-inner">
+    <div>
+      <p class="cta-eyebrow">Student activity</p>
+      <p class="cta-title">Ready to structure your 2-minute demo?</p>
+      <p class="cta-desc">Choose from three narrative frameworks — Problem-Solution, Pixar Story Spine Adapted, or AIDA — and fill in the template to prepare your product walkthrough.</p>
+    </div>
+    <a class="cta-btn" href="templates.html">Open templates →</a>
+  </div>
+</div>
 
 <footer>
-  Pixar storytelling frameworks — compiled from Emma Coats' 22 Rules of Storytelling<br>
-  <a href="https://www.aerogrammestudio.com/2013/03/07/pixars-22-rules-of-storytelling/" target="_blank">aerogrammestudio.com</a> &nbsp;·&nbsp;
-  <a href="templates.html">2-Minute Demo Templates →</a>
+  <span>Pixar storytelling frameworks — <a href="https://www.aerogrammestudio.com/2013/03/07/pixars-22-rules-of-storytelling/" target="_blank">Emma Coats' 22 Rules</a></span>
+  <div class="footer-links">
+    <a href="explore.html">Explore →</a>
+    <a href="templates.html">Templates →</a>
+  </div>
 </footer>
 
 <script>
-function switchTab(id){
-  document.querySelectorAll('.tab').forEach((t,i)=>{
-    t.classList.toggle('active',(i===0&&id==='arc')||(i===1&&id==='rules'));
-  });
-  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
-  document.getElementById('tab-'+id).classList.add('active');
-}
-const stages={
-  1:{label:"Stage 1 — Establish the world",title:'"Once upon a time there was…"',body:"This is the anchor. Introduce who the story is about, where they are, and when. It gives readers a stable baseline so everything disrupted later has real weight. Without it, the inciting incident has nothing to push against.",example:"<em>Finding Nemo:</em> Marlin is an anxious clownfish living safely in a sea anemone with his son Nemo. The peaceful routine of reef life is established before a single thing goes wrong.",color:"#534AB7"},
-  2:{label:"Stage 2 — The normal world",title:'"Every day…"',body:"Show the character's ordinary life in motion. The audience needs to understand the routine that is about to be shattered. The more clearly the normal is drawn, the more powerful the disruption feels.",example:"<em>WALL-E:</em> Every day, WALL-E methodically compacts trash on an abandoned Earth, returning home each night alone. His small rituals paint a vivid picture of solitude before EVE arrives.",color:"#0F6E56"},
-  3:{label:"Stage 3 — The inciting incident",title:'"Until one day…"',body:"Something breaks the pattern. This is the hinge on which the entire story turns. It does not need to be spectacular; it needs to be disruptive. It forces the character out of their comfort zone and into action.",example:"<em>Up:</em> Carl receives an order to leave his home and move to a retirement community. One bureaucratic notice becomes the trigger that sends an elderly widower floating away on a house full of balloons.",color:"#993C1D"},
-  4:{label:"Stage 4 — Cause and consequence",title:'"Because of that…"',body:"The character responds to the disruption — and their response creates new problems. Events do not just happen; they happen because of what came before. This is where most presentations fail, skipping from problem to resolution without showing the chain of logic.",example:"<em>Toy Story:</em> Because Buzz lands in Andy's room and becomes the favourite toy, Woody grows jealous. That jealousy leads directly to the accident that sends both toys spiralling into danger.",color:"#BA7517"},
-  5:{label:"Stage 5 — Consequences compound",title:'"Because of that…" (again)',body:"The stakes escalate. A second wave of cause and effect pushes the story toward its crisis point. Every development must follow from what came before. The character is now deeper in trouble than at the start.",example:"<em>The Incredibles:</em> Because Bob secretly returns to superhero work, his family discovers his deception — pulling them into a far larger threat than he ever faced alone.",color:"#185FA5"},
-  6:{label:"Stage 6 — Resolution",title:'"Until finally…"',body:"The story resolves. A new equilibrium is established — one that feels earned because the chain of cause and consequence made it inevitable. The character has changed.",example:"<em>Inside Out:</em> Riley finally tells her parents how she truly feels. The resolution is not a return to happiness — it is a richer emotional world, earned through everything Joy and Sadness discovered together.",color:"#534AB7"}
-};
-let active=null;
-function selectStage(n){
-  if(active===n){clearStage();return;}
-  active=n;
-  for(let i=1;i<=6;i++){
-    document.getElementById('sn'+i).querySelector('circle').style.strokeWidth='1.5';
-    document.getElementById('sn'+i).querySelector('circle').style.fill='var(--bg)';
-    const d=document.getElementById('d'+i);
-    d.style.background='';d.style.borderColor='';d.style.color='';
-  }
-  const c=document.getElementById('sn'+n).querySelector('circle');
-  c.style.strokeWidth='3';c.style.fill=stages[n].color+'18';
-  const d=document.getElementById('d'+n);
-  d.style.background=stages[n].color;d.style.borderColor=stages[n].color;d.style.color='#fff';
-  document.getElementById('panel-label').textContent=stages[n].label;
-  document.getElementById('panel-title').textContent=stages[n].title;
-  document.getElementById('panel-body').textContent=stages[n].body;
-  document.getElementById('panel-example').innerHTML=stages[n].example;
-  document.getElementById('panel').style.display='block';
-  document.getElementById('hint').style.display='none';
-}
-function clearStage(){
-  active=null;
-  for(let i=1;i<=6;i++){
-    document.getElementById('sn'+i).querySelector('circle').style.strokeWidth='1.5';
-    document.getElementById('sn'+i).querySelector('circle').style.fill='var(--bg)';
-    const d=document.getElementById('d'+i);
-    d.style.background='';d.style.borderColor='';d.style.color='';
-  }
-  document.getElementById('panel').style.display='none';
-  document.getElementById('hint').style.display='block';
-}
-function toggleRule(card){
-  const wasOpen=card.classList.contains('expanded');
-  card.closest('.rules-grid').querySelectorAll('.rule-card').forEach(c=>c.classList.remove('expanded'));
-  if(!wasOpen)card.classList.add('expanded');
-}
+function toggle(id){const el=document.getElementById(id);el.classList.toggle('open');}
+function expandAll(){document.querySelectorAll('.collapsible').forEach(el=>el.classList.add('open'));}
+function collapseAll(){document.querySelectorAll('.collapsible').forEach(el=>el.classList.remove('open'));}
 </script>
 </body>
 </html>

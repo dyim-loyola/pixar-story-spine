@@ -8,6 +8,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    .site-nav { max-width:860px; margin:0 auto; padding:1rem 2rem; display:flex; align-items:center; justify-content:space-between; border-bottom:0.5px solid var(--border); }
+    .nav-brand { font-family:var(--serif); font-size:0.95rem; color:var(--text); text-decoration:none; font-style:italic; }
+    .nav-links { display:flex; gap:0.25rem; }
+    .nav-link { font-size:0.78rem; font-weight:500; color:var(--text3); text-decoration:none; padding:0.3rem 0.7rem; border-radius:var(--radius); transition:background .13s,color .13s; }
+    .nav-link:hover { background:var(--bg2); color:var(--text2); }
+    .nav-link.active { color:var(--text); background:var(--bg2); }
 
     :root {
       --ink: #1a1714;
@@ -315,9 +321,14 @@
 </head>
 <body>
 
-<div class="back-nav">
-  <a href="index.html">← Back to Pixar Storytelling</a>
-</div>
+<nav class="site-nav">
+  <a class="nav-brand" href="index.html">Pixar Storytelling</a>
+  <div class="nav-links">
+    <a class="nav-link" href="index.html">Home</a>
+    <a class="nav-link" href="explore.html">Explore</a>
+    <a class="nav-link active" href="templates.html">Templates</a>
+  </div>
+</nav>
 
 <header>
   <p class="header-eyebrow">Student Activity</p>
@@ -562,7 +573,7 @@
 </main>
 
 <footer>
-  Part of the Pixar Storytelling toolkit — Systems Analysis &amp; Design
+  Part of the Pixar Storytelling toolkit &nbsp;·&nbsp; <a href="index.html">Home</a> &nbsp;·&nbsp; <a href="explore.html">Explore →</a>
 </footer>
 
 <script>
