@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="auto">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,7 +15,7 @@
     .nav-link:hover { background:var(--bg2); color:var(--text2); }
     .nav-link.active { color:var(--text); background:var(--bg2); }
 
-    :root {
+    :root, [data-theme="auto"] {
       --ink: #1a1714;
       --ink2: #5a5550;
       --ink3: #9a9590;
@@ -31,12 +31,33 @@
       --serif: 'Lora', Georgia, serif;
       --sans: 'DM Sans', sans-serif;
     }
+    @media(prefers-color-scheme:dark){
+      :root, [data-theme="auto"] {
+        --ink:#e8e4dc; --ink2:#9a9588; --ink3:#5a5650;
+        --paper:#1a1814; --paper2:#222018; --paper3:#2c2a22;
+        --rule:rgba(255,255,255,0.08); --rule2:rgba(255,255,255,0.15);
+      }
+    }
+    [data-theme="light"] {
+      --ink:#1a1714; --ink2:#5a5550; --ink3:#9a9590;
+      --paper:#faf8f5; --paper2:#f2efe9; --paper3:#e8e4dc;
+      --rule:rgba(0,0,0,0.08); --rule2:rgba(0,0,0,0.15);
+    }
+    [data-theme="dark"] {
+      --ink:#e8e4dc; --ink2:#9a9588; --ink3:#5a5650;
+      --paper:#1a1814; --paper2:#222018; --paper3:#2c2a22;
+      --rule:rgba(255,255,255,0.08); --rule2:rgba(255,255,255,0.15);
+    }
+    .theme-toggle { background:none; border:0.5px solid var(--rule2); border-radius:var(--radius); padding:0.28rem 0.55rem; cursor:pointer; color:var(--ink3); font-size:0.75rem; font-family:var(--sans); transition:background .13s,color .13s; display:flex; align-items:center; gap:4px; white-space:nowrap; }
+    .theme-toggle:hover { background:var(--paper2); color:var(--ink2); }
+    .nav-divider { width:1px; height:16px; background:var(--rule2); margin:0 0.2rem; flex-shrink:0; }
 
     body {
       font-family: var(--sans);
       background: var(--paper);
       color: var(--ink);
       min-height: 100vh;
+      transition: background .2s, color .2s;
     }
 
     /* ── Nav back link ── */
@@ -323,10 +344,12 @@
 
 <nav class="site-nav">
   <a class="nav-brand" href="index.html">Pixar Storytelling</a>
-  <div class="nav-links">
+  <div class="nav-links" style="display:flex;align-items:center;gap:0.25rem;flex-wrap:wrap;">
     <a class="nav-link" href="index.html">Home</a>
     <a class="nav-link" href="explore.html">Explore</a>
     <a class="nav-link active" href="templates.html">Templates</a>
+    <div class="nav-divider"></div>
+    <button class="theme-toggle" onclick="cycleTheme()" id="theme-btn">☀ Light</button>
   </div>
 </nav>
 
@@ -584,6 +607,22 @@ function switchTab(id) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.getElementById('tab-' + id).classList.add('active');
 }
+function toggleRule(card) {
+  const wasOpen = card.classList.contains('expanded');
+  card.closest('.rules-grid').querySelectorAll('.rule-card').forEach(c => c.classList.remove('expanded'));
+  if (!wasOpen) card.classList.add('expanded');
+}
+const themes=['auto','light','dark'];
+const labels={auto:'Auto',light:'☀ Light',dark:'☾ Dark'};
+function getTheme(){return localStorage.getItem('theme')||'auto';}
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  const btn=document.getElementById('theme-btn');
+  if(btn)btn.textContent=labels[t];
+  localStorage.setItem('theme',t);
+}
+function cycleTheme(){const cur=getTheme();applyTheme(themes[(themes.indexOf(cur)+1)%themes.length]);}
+applyTheme(getTheme());
 </script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="auto">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -8,37 +8,41 @@
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
-    :root {
+
+    :root, [data-theme="auto"] {
       --bg:#faf8f5; --bg2:#f2efe9; --bg3:#e8e4dc;
       --text:#1a1714; --text2:#5a5550; --text3:#9a9590;
       --border:rgba(0,0,0,0.08); --border2:rgba(0,0,0,0.16);
-      --radius:4px;
-      --serif:'Lora',Georgia,serif;
-      --sans:'DM Sans',sans-serif;
-      --c1:#534AB7; --c2:#0F6E56; --c3:#993C1D; --c4:#BA7517; --c5:#185FA5;
     }
-    @media(prefers-color-scheme:dark){:root{
-      --bg:#1a1814; --bg2:#222018; --bg3:#2c2a22;
-      --text:#e8e4dc; --text2:#9a9588; --text3:#5a5650;
-      --border:rgba(255,255,255,0.08); --border2:rgba(255,255,255,0.16);
-    }}
-    body { font-family:var(--sans); background:var(--bg); color:var(--text); min-height:100vh; }
+    @media(prefers-color-scheme:dark){
+      :root, [data-theme="auto"] {
+        --bg:#1a1814; --bg2:#222018; --bg3:#2c2a22;
+        --text:#e8e4dc; --text2:#9a9588; --text3:#5a5650;
+        --border:rgba(255,255,255,0.08); --border2:rgba(255,255,255,0.16);
+      }
+    }
+    [data-theme="light"] { --bg:#faf8f5; --bg2:#f2efe9; --bg3:#e8e4dc; --text:#1a1714; --text2:#5a5550; --text3:#9a9590; --border:rgba(0,0,0,0.08); --border2:rgba(0,0,0,0.16); }
+    [data-theme="dark"]  { --bg:#1a1814; --bg2:#222018; --bg3:#2c2a22; --text:#e8e4dc; --text2:#9a9588; --text3:#5a5650; --border:rgba(255,255,255,0.08); --border2:rgba(255,255,255,0.16); }
 
-    /* ── Nav ── */
-    .site-nav { max-width:860px; margin:0 auto; padding:1rem 2rem; display:flex; align-items:center; justify-content:space-between; border-bottom:0.5px solid var(--border); }
-    .nav-brand { font-family:var(--serif); font-size:0.95rem; color:var(--text); text-decoration:none; font-style:italic; }
-    .nav-links { display:flex; gap:0.25rem; }
-    .nav-link { font-size:0.78rem; font-weight:500; color:var(--text3); text-decoration:none; padding:0.3rem 0.7rem; border-radius:var(--radius); transition:background .13s,color .13s; }
+    :root { --radius:4px; --serif:'Lora',Georgia,serif; --sans:'DM Sans',sans-serif; --c1:#534AB7; --c2:#0F6E56; --c3:#993C1D; --c4:#BA7517; --c5:#185FA5; }
+
+    body { font-family:var(--sans); background:var(--bg); color:var(--text); min-height:100vh; transition:background .2s,color .2s; }
+
+    .site-nav { max-width:860px; margin:0 auto; padding:0.85rem 2rem; display:flex; align-items:center; justify-content:space-between; border-bottom:0.5px solid var(--border); gap:1rem; }
+    .nav-brand { font-family:var(--serif); font-size:0.95rem; color:var(--text); text-decoration:none; font-style:italic; white-space:nowrap; }
+    .nav-right { display:flex; align-items:center; gap:0.25rem; flex-wrap:wrap; }
+    .nav-link { font-size:0.78rem; font-weight:500; color:var(--text3); text-decoration:none; padding:0.3rem 0.65rem; border-radius:var(--radius); transition:background .13s,color .13s; white-space:nowrap; }
     .nav-link:hover { background:var(--bg2); color:var(--text2); }
     .nav-link.active { color:var(--text); background:var(--bg2); }
+    .nav-divider { width:1px; height:16px; background:var(--border2); margin:0 0.2rem; flex-shrink:0; }
+    .theme-toggle { background:none; border:0.5px solid var(--border2); border-radius:var(--radius); padding:0.28rem 0.55rem; cursor:pointer; color:var(--text3); font-size:0.75rem; font-family:var(--sans); transition:background .13s,color .13s; display:flex; align-items:center; gap:4px; white-space:nowrap; }
+    .theme-toggle:hover { background:var(--bg2); color:var(--text2); }
 
-    /* ── Page header ── */
     .page-header { max-width:860px; margin:0 auto; padding:2.5rem 2rem 2rem; border-bottom:0.5px solid var(--border2); }
     .page-eyebrow { font-size:0.68rem; font-weight:500; letter-spacing:.12em; text-transform:uppercase; color:var(--text3); margin-bottom:0.6rem; }
-    .page-header h1 { font-family:var(--serif); font-size:clamp(1.5rem,4vw,2.2rem); font-weight:400; color:var(--text); margin-bottom:0.6rem; line-height:1.2; }
+    .page-header h1 { font-family:var(--serif); font-size:clamp(1.5rem,4vw,2.2rem); font-weight:400; color:var(--text); margin-bottom:0.6rem; }
     .page-header p { font-size:0.88rem; color:var(--text2); line-height:1.75; max-width:540px; }
 
-    /* ── Inner tabs ── */
     .tab-strip { max-width:860px; margin:0 auto; border-bottom:0.5px solid var(--border2); padding:0 2rem; display:flex; }
     .itab { padding:0.75rem 1.1rem; font-size:0.82rem; font-weight:500; color:var(--text3); cursor:pointer; border:none; background:none; border-bottom:2px solid transparent; margin-bottom:-0.5px; transition:color .14s,border-color .14s; white-space:nowrap; font-family:var(--sans); }
     .itab:hover { color:var(--text2); }
@@ -46,10 +50,8 @@
     .itab-panel { display:none; }
     .itab-panel.active { display:block; }
 
-    /* ── Main ── */
     main { max-width:860px; margin:0 auto; padding:0 2rem 5rem; }
 
-    /* ── Arc ── */
     .arc-wrap { padding-top:2rem; }
     #hint { font-size:0.76rem; color:var(--text3); text-align:center; margin:0 0 1rem; }
     #panel { background:var(--bg); border:0.5px solid var(--border2); border-radius:var(--radius); padding:1.1rem 1.3rem; display:none; animation:fadeUp .16s ease; }
@@ -72,7 +74,6 @@
     .arc-node circle { transition:stroke-width .13s,fill .13s; }
     .arc-node:hover circle { stroke-width:2.5 !important; }
 
-    /* ── 22 Rules ── */
     .rules-wrap { padding-top:2rem; }
     .rules-intro { font-size:0.87rem; color:var(--text2); line-height:1.75; margin-bottom:1.75rem; max-width:560px; }
     .rules-intro a { color:var(--text); text-decoration:underline; text-underline-offset:2px; }
@@ -95,7 +96,6 @@
     .theme-craft     .theme-label { color:#BA7517; }
     .theme-audience  .theme-label { color:#185FA5; }
 
-    /* ── Footer ── */
     footer { max-width:860px; margin:0 auto; padding:1.75rem 2rem; font-size:0.73rem; color:var(--text3); border-top:0.5px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.75rem; }
     footer a { color:inherit; text-decoration:underline; text-underline-offset:2px; }
     .footer-links { display:flex; gap:1rem; }
@@ -105,10 +105,12 @@
 
 <nav class="site-nav">
   <a class="nav-brand" href="index.html">Pixar Storytelling</a>
-  <div class="nav-links">
+  <div class="nav-right">
     <a class="nav-link" href="index.html">Home</a>
     <a class="nav-link active" href="explore.html">Explore</a>
     <a class="nav-link" href="templates.html">Templates</a>
+    <div class="nav-divider"></div>
+    <button class="theme-toggle" onclick="cycleTheme()" id="theme-btn" title="Toggle theme">☀ Light</button>
   </div>
 </nav>
 
@@ -124,8 +126,6 @@
 </div>
 
 <main>
-
-  <!-- Arc -->
   <div class="itab-panel active" id="itab-arc">
     <div class="arc-wrap">
       <svg width="100%" viewBox="0 0 680 290" role="img" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:0.5rem">
@@ -138,44 +138,15 @@
         <text x="14" y="150" font-size="10" fill="var(--text3)" font-family="var(--sans)" text-anchor="middle" transform="rotate(-90,14,150)">tension</text>
         <text x="344" y="268" font-size="10" fill="var(--text3)" font-family="var(--sans)" text-anchor="middle">narrative progression →</text>
         <path d="M70 228 C 148 228, 196 76, 258 76 C 314 76, 352 103, 396 134 C 440 166, 475 185, 528 100 C 555 60, 578 46, 618 48" fill="none" stroke="var(--border2)" stroke-width="1.5" stroke-dasharray="6 3"/>
-        <g class="arc-node" id="sn1" onclick="selectStage(1)">
-          <circle cx="70"  cy="228" r="26" fill="var(--bg)" stroke="#534AB7" stroke-width="1.5"/>
-          <text x="70"  y="224" text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#534AB7">Once upon</text>
-          <text x="70"  y="237" text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#534AB7">a time…</text>
-        </g>
-        <g class="arc-node" id="sn2" onclick="selectStage(2)">
-          <circle cx="180" cy="172" r="26" fill="var(--bg)" stroke="#0F6E56" stroke-width="1.5"/>
-          <text x="180" y="168" text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#0F6E56">Every</text>
-          <text x="180" y="181" text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#0F6E56">day…</text>
-        </g>
-        <g class="arc-node" id="sn3" onclick="selectStage(3)">
-          <circle cx="270" cy="76"  r="26" fill="var(--bg)" stroke="#993C1D" stroke-width="1.5"/>
-          <text x="270" y="72"  text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#993C1D">Until one</text>
-          <text x="270" y="85"  text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#993C1D">day…</text>
-        </g>
-        <g class="arc-node" id="sn4" onclick="selectStage(4)">
-          <circle cx="390" cy="134" r="26" fill="var(--bg)" stroke="#BA7517" stroke-width="1.5"/>
-          <text x="390" y="130" text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#BA7517">Because</text>
-          <text x="390" y="143" text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#BA7517">of that…</text>
-        </g>
-        <g class="arc-node" id="sn5" onclick="selectStage(5)">
-          <circle cx="492" cy="143" r="26" fill="var(--bg)" stroke="#185FA5" stroke-width="1.5"/>
-          <text x="492" y="139" text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#185FA5">Because</text>
-          <text x="492" y="152" text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#185FA5">of that…</text>
-        </g>
-        <g class="arc-node" id="sn6" onclick="selectStage(6)">
-          <circle cx="618" cy="48"  r="26" fill="var(--bg)" stroke="#534AB7" stroke-width="1.5"/>
-          <text x="618" y="44"  text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#534AB7">Until</text>
-          <text x="618" y="57"  text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#534AB7">finally…</text>
-        </g>
+        <g class="arc-node" id="sn1" onclick="selectStage(1)"><circle cx="70"  cy="228" r="26" fill="var(--bg)" stroke="#534AB7" stroke-width="1.5"/><text x="70"  y="224" text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#534AB7">Once upon</text><text x="70"  y="237" text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#534AB7">a time…</text></g>
+        <g class="arc-node" id="sn2" onclick="selectStage(2)"><circle cx="180" cy="172" r="26" fill="var(--bg)" stroke="#0F6E56" stroke-width="1.5"/><text x="180" y="168" text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#0F6E56">Every</text><text x="180" y="181" text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#0F6E56">day…</text></g>
+        <g class="arc-node" id="sn3" onclick="selectStage(3)"><circle cx="270" cy="76"  r="26" fill="var(--bg)" stroke="#993C1D" stroke-width="1.5"/><text x="270" y="72"  text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#993C1D">Until one</text><text x="270" y="85"  text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#993C1D">day…</text></g>
+        <g class="arc-node" id="sn4" onclick="selectStage(4)"><circle cx="390" cy="134" r="26" fill="var(--bg)" stroke="#BA7517" stroke-width="1.5"/><text x="390" y="130" text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#BA7517">Because</text><text x="390" y="143" text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#BA7517">of that…</text></g>
+        <g class="arc-node" id="sn5" onclick="selectStage(5)"><circle cx="492" cy="143" r="26" fill="var(--bg)" stroke="#185FA5" stroke-width="1.5"/><text x="492" y="139" text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#185FA5">Because</text><text x="492" y="152" text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#185FA5">of that…</text></g>
+        <g class="arc-node" id="sn6" onclick="selectStage(6)"><circle cx="618" cy="48"  r="26" fill="var(--bg)" stroke="#534AB7" stroke-width="1.5"/><text x="618" y="44"  text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#534AB7">Until</text><text x="618" y="57"  text-anchor="middle" font-size="9" font-weight="500" font-family="var(--sans)" fill="#534AB7">finally…</text></g>
       </svg>
       <p id="hint">Click any stage on the arc to explore its role in the story</p>
-      <div id="panel">
-        <p id="panel-label"></p>
-        <p id="panel-title"></p>
-        <p id="panel-body"></p>
-        <p id="panel-example"></p>
-      </div>
+      <div id="panel"><p id="panel-label"></p><p id="panel-title"></p><p id="panel-body"></p><p id="panel-example"></p></div>
       <div id="dots">
         <div class="dot" id="d1" onclick="selectStage(1)">1</div>
         <div class="dot" id="d2" onclick="selectStage(2)">2</div>
@@ -195,15 +166,13 @@
     </div>
   </div>
 
-  <!-- 22 Rules -->
   <div class="itab-panel" id="itab-rules">
     <div class="rules-wrap">
       <p class="rules-intro">Originally compiled by Pixar story artist Emma Coats. Click any card to read the full rule. Full list at <a href="https://www.aerogrammestudio.com/2013/03/07/pixars-22-rules-of-storytelling/" target="_blank">aerogrammestudio.com</a>.</p>
-
       <div class="theme-block theme-character">
         <p class="theme-label">Character</p>
         <div class="rules-grid">
-          <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 1</p><p class="rule-short">Admire trying, not just success</p><p class="rule-detail">You admire a character more for trying than for their successes. Effort and failure are more compelling than achievement — audiences root for struggle, not victory.</p></div>
+          <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 1</p><p class="rule-short">Admire trying, not just success</p><p class="rule-detail">You admire a character more for trying than for their successes. Effort and failure are more compelling — audiences root for struggle, not victory.</p></div>
           <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 6</p><p class="rule-short">Throw the opposite at them</p><p class="rule-detail">Figure out what your character is good at or comfortable with, then throw the opposite at them. Constraint reveals character far better than comfort does.</p></div>
           <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 13</p><p class="rule-short">Give characters opinions</p><p class="rule-detail">Passive, malleable characters might seem likable to write, but they are poison to an audience. Characters must want something and take positions — even wrong ones.</p></div>
           <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 15</p><p class="rule-short">Ask how you would feel</p><p class="rule-detail">If you were your character in this situation, how would you feel? Honesty grounded in real emotion makes even unbelievable situations feel credible.</p></div>
@@ -236,7 +205,7 @@
       <div class="theme-block theme-audience">
         <p class="theme-label">Audience &amp; inspiration</p>
         <div class="rules-grid">
-          <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 2</p><p class="rule-short">Think like an audience, not a writer</p><p class="rule-detail">Keep in mind what is interesting to you as an audience, not just what is fun to make. The writer's pleasure and the viewer's pleasure are not always the same.</p></div>
+          <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 2</p><p class="rule-short">Think like an audience, not a writer</p><p class="rule-detail">Keep in mind what is interesting to you as an audience, not just what is fun to make. The writer's and viewer's pleasure are not always the same.</p></div>
           <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 10</p><p class="rule-short">Pull apart stories you love</p><p class="rule-detail">Identify what you like in stories that move you. That is a part of you — and you can use it. Studying what works is not copying; it is learning your own taste.</p></div>
           <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 14</p><p class="rule-short">Know why you must tell this story</p><p class="rule-detail">The belief burning inside you that it feeds on is its heart. If you cannot answer this, the audience will feel the absence even if they cannot name it.</p></div>
           <div class="rule-card" onclick="toggleRule(this)"><p class="rule-num">Rule 20</p><p class="rule-short">Rearrange a film you dislike</p><p class="rule-detail">Take apart a movie you don't like and rearrange its pieces. Bad films often have good ingredients in the wrong order.</p></div>
@@ -244,7 +213,6 @@
       </div>
     </div>
   </div>
-
 </main>
 
 <footer>
@@ -262,11 +230,11 @@ function switchTab(id){
   document.getElementById('itab-'+id).classList.add('active');
 }
 const stages={
-  1:{label:"Stage 1 — Establish the world",title:'"Once upon a time there was…"',body:"This is the anchor. Introduce who the story is about, where they are, and when. It gives readers a stable baseline so everything disrupted later has real weight. Without it, the inciting incident has nothing to push against.",example:"<em>Finding Nemo:</em> Marlin is an anxious clownfish living safely in a sea anemone with his son Nemo. The peaceful routine of reef life is established before a single thing goes wrong.",color:"#534AB7"},
+  1:{label:"Stage 1 — Establish the world",title:'"Once upon a time there was…"',body:"This is the anchor. Introduce who the story is about, where they are, and when. It gives readers a stable baseline so everything disrupted later has real weight.",example:"<em>Finding Nemo:</em> Marlin is an anxious clownfish living safely in a sea anemone with his son Nemo. The peaceful routine of reef life is established before a single thing goes wrong.",color:"#534AB7"},
   2:{label:"Stage 2 — The normal world",title:'"Every day…"',body:"Show the character's ordinary life in motion. The audience needs to understand the routine that is about to be shattered. The more clearly the normal is drawn, the more powerful the disruption feels.",example:"<em>WALL-E:</em> Every day, WALL-E methodically compacts trash on an abandoned Earth, returning home each night alone. His small rituals paint a vivid picture of solitude before EVE arrives.",color:"#0F6E56"},
   3:{label:"Stage 3 — The inciting incident",title:'"Until one day…"',body:"Something breaks the pattern. This is the hinge on which the entire story turns. It does not need to be spectacular — it needs to be disruptive enough to force the character to act.",example:"<em>Up:</em> Carl receives an order to leave his home and move to a retirement community. One bureaucratic notice becomes the trigger that sends an elderly widower floating away on a house full of balloons.",color:"#993C1D"},
-  4:{label:"Stage 4 — Cause and consequence",title:'"Because of that…"',body:"The character responds — and their response creates new problems. Events do not just happen; they happen because of what came before. This is where most presentations fail, skipping from problem to resolution without the chain of logic.",example:"<em>Toy Story:</em> Because Buzz lands in Andy's room and becomes the favourite toy, Woody grows jealous. That jealousy leads directly to the accident that sends both toys spiralling into danger.",color:"#BA7517"},
-  5:{label:"Stage 5 — Consequences compound",title:'"Because of that…" (again)',body:"The stakes escalate. A second wave of cause and effect pushes the story toward its crisis point. Every development must follow from what came before. The character is now deeper in trouble than at the start.",example:"<em>The Incredibles:</em> Because Bob secretly returns to superhero work, his family discovers his deception — pulling them into a far larger threat than he ever faced alone.",color:"#185FA5"},
+  4:{label:"Stage 4 — Cause and consequence",title:'"Because of that…"',body:"The character responds — and their response creates new problems. Events do not just happen; they happen because of what came before. This is where most presentations fail.",example:"<em>Toy Story:</em> Because Buzz lands in Andy's room and becomes the favourite toy, Woody grows jealous. That jealousy leads directly to the accident that sends both toys spiralling into danger.",color:"#BA7517"},
+  5:{label:"Stage 5 — Consequences compound",title:'"Because of that…" (again)',body:"The stakes escalate. A second wave of cause and effect pushes the story toward its crisis point. Every development must follow from what came before.",example:"<em>The Incredibles:</em> Because Bob secretly returns to superhero work, his family discovers his deception — pulling them into a far larger threat than he ever faced alone.",color:"#185FA5"},
   6:{label:"Stage 6 — Resolution",title:'"Until finally…"',body:"The story resolves. A new equilibrium is established — one that feels earned because the chain of cause and consequence made it inevitable. The character has changed.",example:"<em>Inside Out:</em> Riley finally tells her parents how she truly feels. The resolution is not a return to happiness — it is a richer emotional world, earned through everything Joy and Sadness discovered together.",color:"#534AB7"}
 };
 let active=null;
@@ -276,8 +244,7 @@ function selectStage(n){
   for(let i=1;i<=6;i++){
     document.getElementById('sn'+i).querySelector('circle').style.strokeWidth='1.5';
     document.getElementById('sn'+i).querySelector('circle').style.fill='var(--bg)';
-    const d=document.getElementById('d'+i);
-    d.style.background='';d.style.borderColor='';d.style.color='';
+    const d=document.getElementById('d'+i);d.style.background='';d.style.borderColor='';d.style.color='';
   }
   document.getElementById('sn'+n).querySelector('circle').style.strokeWidth='3';
   document.getElementById('sn'+n).querySelector('circle').style.fill=stages[n].color+'18';
@@ -295,8 +262,7 @@ function clearStage(){
   for(let i=1;i<=6;i++){
     document.getElementById('sn'+i).querySelector('circle').style.strokeWidth='1.5';
     document.getElementById('sn'+i).querySelector('circle').style.fill='var(--bg)';
-    const d=document.getElementById('d'+i);
-    d.style.background='';d.style.borderColor='';d.style.color='';
+    const d=document.getElementById('d'+i);d.style.background='';d.style.borderColor='';d.style.color='';
   }
   document.getElementById('panel').style.display='none';
   document.getElementById('hint').style.display='block';
@@ -306,6 +272,19 @@ function toggleRule(card){
   card.closest('.rules-grid').querySelectorAll('.rule-card').forEach(c=>c.classList.remove('expanded'));
   if(!wasOpen)card.classList.add('expanded');
 }
+
+/* ── Theme ── */
+const themes=['auto','light','dark'];
+const labels={auto:'Auto',light:'☀ Light',dark:'☾ Dark'};
+function getTheme(){return localStorage.getItem('theme')||'auto';}
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  const btn=document.getElementById('theme-btn');
+  if(btn)btn.textContent=labels[t];
+  localStorage.setItem('theme',t);
+}
+function cycleTheme(){const cur=getTheme();applyTheme(themes[(themes.indexOf(cur)+1)%themes.length]);}
+applyTheme(getTheme());
 </script>
 </body>
 </html>

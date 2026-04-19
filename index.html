@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="auto">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -8,40 +8,66 @@
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
-    :root {
+
+    /* ── Tokens: auto follows system, light/dark override ── */
+    :root,
+    [data-theme="auto"] {
       --bg:#faf8f5; --bg2:#f2efe9; --bg3:#e8e4dc;
       --text:#1a1714; --text2:#5a5550; --text3:#9a9590;
       --border:rgba(0,0,0,0.08); --border2:rgba(0,0,0,0.16);
-      --radius:4px;
-      --serif:'Lora',Georgia,serif;
-      --sans:'DM Sans',sans-serif;
-      --c1:#534AB7; --c2:#0F6E56; --c3:#993C1D; --c4:#BA7517; --c5:#185FA5;
+      --cta-bg:#1a1714; --cta-text:#e8e4dc; --cta-muted:rgba(232,228,220,0.55); --cta-btn-bg:#e8e4dc; --cta-btn-text:#1a1714;
     }
-    @media(prefers-color-scheme:dark){:root{
+    @media(prefers-color-scheme:dark){
+      :root, [data-theme="auto"] {
+        --bg:#1a1814; --bg2:#222018; --bg3:#2c2a22;
+        --text:#e8e4dc; --text2:#9a9588; --text3:#5a5650;
+        --border:rgba(255,255,255,0.08); --border2:rgba(255,255,255,0.16);
+        --cta-bg:#e8e4dc; --cta-text:#1a1714; --cta-muted:rgba(26,23,20,0.55); --cta-btn-bg:#1a1714; --cta-btn-text:#e8e4dc;
+      }
+    }
+    [data-theme="light"] {
+      --bg:#faf8f5; --bg2:#f2efe9; --bg3:#e8e4dc;
+      --text:#1a1714; --text2:#5a5550; --text3:#9a9590;
+      --border:rgba(0,0,0,0.08); --border2:rgba(0,0,0,0.16);
+      --cta-bg:#1a1714; --cta-text:#e8e4dc; --cta-muted:rgba(232,228,220,0.55); --cta-btn-bg:#e8e4dc; --cta-btn-text:#1a1714;
+    }
+    [data-theme="dark"] {
       --bg:#1a1814; --bg2:#222018; --bg3:#2c2a22;
       --text:#e8e4dc; --text2:#9a9588; --text3:#5a5650;
       --border:rgba(255,255,255,0.08); --border2:rgba(255,255,255,0.16);
-    }}
-    body { font-family:var(--sans); background:var(--bg); color:var(--text); min-height:100vh; }
+      --cta-bg:#e8e4dc; --cta-text:#1a1714; --cta-muted:rgba(26,23,20,0.55); --cta-btn-bg:#1a1714; --cta-btn-text:#e8e4dc;
+    }
 
-    /* ── Site nav ── */
-    .site-nav { max-width:860px; margin:0 auto; padding:1rem 2rem; display:flex; align-items:center; justify-content:space-between; border-bottom:0.5px solid var(--border); }
-    .nav-brand { font-family:var(--serif); font-size:0.95rem; color:var(--text); text-decoration:none; font-style:italic; }
-    .nav-links { display:flex; gap:0.25rem; }
-    .nav-link { font-size:0.78rem; font-weight:500; color:var(--text3); text-decoration:none; padding:0.3rem 0.7rem; border-radius:var(--radius); transition:background .13s,color .13s; }
+    :root { --radius:4px; --serif:'Lora',Georgia,serif; --sans:'DM Sans',sans-serif; --c1:#534AB7; --c2:#0F6E56; --c3:#993C1D; --c4:#BA7517; --c5:#185FA5; }
+
+    body { font-family:var(--sans); background:var(--bg); color:var(--text); min-height:100vh; transition:background .2s,color .2s; }
+
+    /* ── Nav ── */
+    .site-nav { max-width:860px; margin:0 auto; padding:0.85rem 2rem; display:flex; align-items:center; justify-content:space-between; border-bottom:0.5px solid var(--border); gap:1rem; }
+    .nav-brand { font-family:var(--serif); font-size:0.95rem; color:var(--text); text-decoration:none; font-style:italic; white-space:nowrap; }
+    .nav-right { display:flex; align-items:center; gap:0.25rem; flex-wrap:wrap; }
+    .nav-link { font-size:0.78rem; font-weight:500; color:var(--text3); text-decoration:none; padding:0.3rem 0.65rem; border-radius:var(--radius); transition:background .13s,color .13s; white-space:nowrap; }
     .nav-link:hover { background:var(--bg2); color:var(--text2); }
     .nav-link.active { color:var(--text); background:var(--bg2); }
+    .nav-divider { width:1px; height:16px; background:var(--border2); margin:0 0.2rem; flex-shrink:0; }
+    .theme-toggle { background:none; border:0.5px solid var(--border2); border-radius:var(--radius); padding:0.28rem 0.55rem; cursor:pointer; color:var(--text3); font-size:0.75rem; font-family:var(--sans); transition:background .13s,color .13s; display:flex; align-items:center; gap:4px; white-space:nowrap; }
+    .theme-toggle:hover { background:var(--bg2); color:var(--text2); }
 
     /* ── Hero ── */
-    .hero { max-width:860px; margin:0 auto; padding:3.5rem 2rem 3rem; border-bottom:0.5px solid var(--border2); }
+    .hero { max-width:860px; margin:0 auto; padding:3rem 2rem 2.5rem; border-bottom:0.5px solid var(--border2); }
     .hero-eyebrow { font-size:0.68rem; font-weight:500; letter-spacing:.12em; text-transform:uppercase; color:var(--text3); margin-bottom:0.9rem; }
-    .hero h1 { font-family:var(--serif); font-size:clamp(2rem,5vw,3.2rem); font-weight:400; line-height:1.15; letter-spacing:-0.02em; color:var(--text); margin-bottom:1.1rem; }
+    .hero h1 { font-family:var(--serif); font-size:clamp(2rem,5vw,3.2rem); font-weight:400; line-height:1.15; letter-spacing:-0.02em; color:var(--text); margin-bottom:1rem; }
     .hero-body { font-size:0.92rem; color:var(--text2); line-height:1.8; max-width:540px; }
     .hero-body a { color:var(--text); text-decoration:underline; text-underline-offset:2px; }
 
+    /* ── Page controls ── */
+    .page-controls { max-width:860px; margin:0 auto; padding:0.6rem 2rem; display:flex; justify-content:flex-end; gap:0.4rem; border-bottom:0.5px solid var(--border); }
+    .ctrl-btn { font-size:0.72rem; color:var(--text3); background:none; border:0.5px solid var(--border2); border-radius:var(--radius); padding:3px 8px; cursor:pointer; transition:background .12s,color .12s; font-family:var(--sans); }
+    .ctrl-btn:hover { background:var(--bg2); color:var(--text2); }
+
     /* ── Collapsible ── */
     .collapsible { max-width:860px; margin:0 auto; border-bottom:0.5px solid var(--border2); }
-    .collapsible-trigger { width:100%; display:flex; align-items:center; justify-content:space-between; padding:1.3rem 2rem; background:none; border:none; cursor:pointer; text-align:left; gap:1rem; transition:background .13s; }
+    .collapsible-trigger { width:100%; display:flex; align-items:center; justify-content:space-between; padding:1.25rem 2rem; background:none; border:none; cursor:pointer; text-align:left; gap:1rem; transition:background .13s; }
     .collapsible-trigger:hover { background:var(--bg2); }
     .trigger-left { display:flex; flex-direction:column; gap:3px; }
     .trigger-eyebrow { font-size:0.63rem; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:var(--text3); }
@@ -52,11 +78,6 @@
     .collapsible.open .trigger-chevron { transform:rotate(180deg); }
     .collapsible-body { display:none; padding:0 2rem 2.5rem; }
     .collapsible.open .collapsible-body { display:block; }
-
-    /* ── Page controls ── */
-    .page-controls { max-width:860px; margin:0 auto; padding:0.6rem 2rem; display:flex; justify-content:flex-end; gap:0.4rem; border-bottom:0.5px solid var(--border); }
-    .ctrl-btn { font-size:0.72rem; color:var(--text3); background:none; border:0.5px solid var(--border2); border-radius:var(--radius); padding:3px 8px; cursor:pointer; transition:background .12s,color .12s; font-family:var(--sans); }
-    .ctrl-btn:hover { background:var(--bg2); color:var(--text2); }
 
     /* ── Prose ── */
     .section-body { font-size:0.9rem; color:var(--text2); line-height:1.8; max-width:600px; margin-bottom:1.2rem; }
@@ -96,27 +117,15 @@
     .s5 .spine-stage { border-left:3px solid var(--c5); }
     .s6 .spine-stage { border-left:3px solid var(--c1); }
 
-    /* ── Templates CTA ── */
+    /* ── Templates CTA — uses dedicated tokens so it always contrasts ── */
     .cta-band { max-width:860px; margin:0 auto; }
-    .cta-inner {
-      margin:0; padding:2.5rem 2rem;
-      display:grid; grid-template-columns:1fr auto;
-      align-items:center; gap:2rem;
-      background:var(--text); border-radius:0;
-    }
+    .cta-inner { padding:2.5rem 2rem; display:grid; grid-template-columns:1fr auto; align-items:center; gap:2rem; background:var(--cta-bg); }
     @media(max-width:540px){ .cta-inner { grid-template-columns:1fr; } }
-    .cta-eyebrow { font-size:0.65rem; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,0.5); margin-bottom:0.4rem; }
-    .cta-title { font-family:var(--serif); font-size:1.3rem; font-weight:400; color:#fff; margin-bottom:0.5rem; line-height:1.3; }
-    .cta-desc { font-size:0.82rem; color:rgba(255,255,255,0.65); line-height:1.65; }
-    .cta-btn {
-      display:inline-block; white-space:nowrap;
-      font-size:0.82rem; font-weight:500;
-      background:#fff; color:var(--text);
-      text-decoration:none; padding:0.6rem 1.3rem;
-      border-radius:var(--radius); border:none;
-      transition:opacity .14s;
-    }
-    .cta-btn:hover { opacity:0.88; }
+    .cta-eyebrow { font-size:0.65rem; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:var(--cta-muted); margin-bottom:0.4rem; }
+    .cta-title { font-family:var(--serif); font-size:1.3rem; font-weight:400; color:var(--cta-text); margin-bottom:0.5rem; line-height:1.3; }
+    .cta-desc { font-size:0.82rem; color:var(--cta-muted); line-height:1.65; }
+    .cta-btn { display:inline-block; white-space:nowrap; font-size:0.82rem; font-weight:500; background:var(--cta-btn-bg); color:var(--cta-btn-text); text-decoration:none; padding:0.6rem 1.3rem; border-radius:var(--radius); transition:opacity .14s; }
+    .cta-btn:hover { opacity:0.85; }
 
     /* ── Footer ── */
     footer { max-width:860px; margin:0 auto; padding:1.75rem 2rem; font-size:0.73rem; color:var(--text3); border-top:0.5px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.75rem; }
@@ -126,17 +135,17 @@
 </head>
 <body>
 
-<!-- Nav -->
 <nav class="site-nav">
   <a class="nav-brand" href="index.html">Pixar Storytelling</a>
-  <div class="nav-links">
+  <div class="nav-right">
     <a class="nav-link active" href="index.html">Home</a>
     <a class="nav-link" href="explore.html">Explore</a>
     <a class="nav-link" href="templates.html">Templates</a>
+    <div class="nav-divider"></div>
+    <button class="theme-toggle" onclick="cycleTheme()" id="theme-btn" title="Toggle theme">☀ Light</button>
   </div>
 </nav>
 
-<!-- Hero -->
 <div class="hero">
   <p class="hero-eyebrow">Systems Analysis &amp; Design — Storytelling Toolkit</p>
   <h1>Pixar Storytelling</h1>
@@ -145,7 +154,6 @@
   </p>
 </div>
 
-<!-- Page controls -->
 <div class="page-controls">
   <button class="ctrl-btn" onclick="expandAll()">Expand all</button>
   <button class="ctrl-btn" onclick="collapseAll()">Collapse all</button>
@@ -164,26 +172,12 @@
     </div>
   </button>
   <div class="collapsible-body">
-    <p class="section-body">
-      Emma Coats distilled Pixar's internal storytelling philosophy into 22 rules — practical principles that guide how every Pixar film is structured. At the heart of those rules is one insight: <strong>good stories are built on cause and consequence, not a sequence of events.</strong>
-    </p>
+    <p class="section-body">Emma Coats distilled Pixar's internal storytelling philosophy into 22 rules — practical principles that guide how every Pixar film is structured. At the heart of those rules is one insight: <strong>good stories are built on cause and consequence, not a sequence of events.</strong></p>
     <div class="overview-grid">
-      <div class="overview-cell">
-        <h3>Why it works in the classroom</h3>
-        <p>The Story Spine replaces vague advice — "have a beginning, middle, and end" — with a repeatable method that enforces causal thinking at every stage.</p>
-      </div>
-      <div class="overview-cell">
-        <h3>Why it works for product pitches</h3>
-        <p>A product that solves a real problem has a story built into it. The Story Spine surfaces that story — moving from user context to disruption to resolution naturally.</p>
-      </div>
-      <div class="overview-cell">
-        <h3>The 22 Rules</h3>
-        <p>Beyond structure, the 22 Rules address the harder questions: how to write characters audiences care about, when to abandon material, and what makes a story worth telling.</p>
-      </div>
-      <div class="overview-cell">
-        <h3>From 2 minutes to 7 minutes</h3>
-        <p>The frameworks scale. The 2-minute demo uses the same causal logic as the full lifecycle presentation — the difference is scope, not structure.</p>
-      </div>
+      <div class="overview-cell"><h3>Why it works in the classroom</h3><p>The Story Spine replaces vague advice — "have a beginning, middle, and end" — with a repeatable method that enforces causal thinking at every stage.</p></div>
+      <div class="overview-cell"><h3>Why it works for product pitches</h3><p>A product that solves a real problem has a story built into it. The Story Spine surfaces that story — moving from user context to disruption to resolution naturally.</p></div>
+      <div class="overview-cell"><h3>The 22 Rules</h3><p>Beyond structure, the 22 Rules address the harder questions: how to write characters audiences care about, when to abandon material, and what makes a story worth telling.</p></div>
+      <div class="overview-cell"><h3>From 2 minutes to 7 minutes</h3><p>The frameworks scale. The 2-minute demo uses the same causal logic as the full lifecycle presentation — the difference is scope, not structure.</p></div>
     </div>
   </div>
 </div>
@@ -203,12 +197,7 @@
   <div class="collapsible-body">
     <p class="section-body">Watch how the Story Spine is explained and applied before exploring the structure below.</p>
     <div class="video-wrap">
-      <iframe width="560" height="315"
-        src="https://www.youtube.com/embed/Y34eshkxE5o?si=GVHhwAHVFF0W1QUm"
-        title="YouTube video player" frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-      </iframe>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/Y34eshkxE5o?si=GVHhwAHVFF0W1QUm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     </div>
     <p class="video-caption">Can't see the video? <a href="https://youtu.be/Y34eshkxE5o" target="_blank">Watch on YouTube →</a></p>
   </div>
@@ -227,57 +216,37 @@
     </div>
   </button>
   <div class="collapsible-body">
-    <p class="section-body">
-      Six sentence starters, completed in sequence, produce a causally coherent story. The key word is <em>because</em> — every stage must follow logically from the one before it. Developed by improv teacher Kenn Adams and adopted by Pixar as a story development tool.
-    </p>
+    <p class="section-body">Six sentence starters, completed in sequence, produce a causally coherent story. The key word is <em>because</em> — every stage must follow logically from the one before it.</p>
     <div class="spine-table">
       <div class="spine-row s1">
         <div class="spine-stage"><span class="spine-stage-num">Stage 1</span><span class="spine-stage-label">"Once upon a time…"</span></div>
-        <div class="spine-content">
-          <p class="spine-prompt">Establish <span class="ph">[who]</span>, <span class="ph">[where]</span>, and <span class="ph">[when]</span>. Anchor the audience before anything is disrupted.</p>
-          <p class="spine-eg"><em>Finding Nemo:</em> Marlin is an anxious clownfish living in a sea anemone with his son Nemo on a quiet coral reef.</p>
-        </div>
+        <div class="spine-content"><p class="spine-prompt">Establish <span class="ph">[who]</span>, <span class="ph">[where]</span>, and <span class="ph">[when]</span>. Anchor the audience before anything is disrupted.</p><p class="spine-eg"><em>Finding Nemo:</em> Marlin is an anxious clownfish living in a sea anemone with his son Nemo on a quiet coral reef.</p></div>
       </div>
       <div class="spine-row s2">
         <div class="spine-stage"><span class="spine-stage-num">Stage 2</span><span class="spine-stage-label">"Every day…"</span></div>
-        <div class="spine-content">
-          <p class="spine-prompt">Show <span class="ph">[the character's normal routine]</span>. This baseline makes the disruption meaningful.</p>
-          <p class="spine-eg"><em>WALL-E:</em> Every day, WALL-E compacts trash alone on an abandoned Earth and watches Hello Dolly before sleeping.</p>
-        </div>
+        <div class="spine-content"><p class="spine-prompt">Show <span class="ph">[the character's normal routine]</span>. This baseline makes the disruption meaningful.</p><p class="spine-eg"><em>WALL-E:</em> Every day, WALL-E compacts trash alone on an abandoned Earth and watches Hello Dolly before sleeping.</p></div>
       </div>
       <div class="spine-row s3">
         <div class="spine-stage"><span class="spine-stage-num">Stage 3</span><span class="spine-stage-label">"Until one day…"</span></div>
-        <div class="spine-content">
-          <p class="spine-prompt"><span class="ph">[The inciting incident]</span> breaks the pattern. It doesn't need to be dramatic — it needs to be disruptive enough to force action.</p>
-          <p class="spine-eg"><em>Up:</em> Carl receives an order to vacate his home and move to a retirement community.</p>
-        </div>
+        <div class="spine-content"><p class="spine-prompt"><span class="ph">[The inciting incident]</span> breaks the pattern. It doesn't need to be dramatic — it needs to force action.</p><p class="spine-eg"><em>Up:</em> Carl receives an order to vacate his home and move to a retirement community.</p></div>
       </div>
       <div class="spine-row s4">
         <div class="spine-stage"><span class="spine-stage-num">Stage 4</span><span class="spine-stage-label">"Because of that…"</span></div>
-        <div class="spine-content">
-          <p class="spine-prompt">The character responds — and <span class="ph">[their response creates new problems]</span>. Events must happen <em>because of</em> each other, not just after each other.</p>
-          <p class="spine-eg"><em>Toy Story:</em> Because Buzz becomes Andy's favourite, Woody's jealousy leads to an accident stranding them both.</p>
-        </div>
+        <div class="spine-content"><p class="spine-prompt">The character responds — and <span class="ph">[their response creates new problems]</span>. Events must happen <em>because of</em> each other.</p><p class="spine-eg"><em>Toy Story:</em> Because Buzz becomes Andy's favourite, Woody's jealousy leads to an accident stranding them both.</p></div>
       </div>
       <div class="spine-row s5">
         <div class="spine-stage"><span class="spine-stage-num">Stage 5</span><span class="spine-stage-label">"Because of that…"</span></div>
-        <div class="spine-content">
-          <p class="spine-prompt">The consequences compound. <span class="ph">[A second cause-and-effect stage]</span> raises the stakes further.</p>
-          <p class="spine-eg"><em>The Incredibles:</em> Because Bob secretly returns to superhero work, his deception pulls the whole family into a far larger threat.</p>
-        </div>
+        <div class="spine-content"><p class="spine-prompt">The consequences compound. <span class="ph">[A second cause-and-effect stage]</span> raises the stakes further.</p><p class="spine-eg"><em>The Incredibles:</em> Because Bob secretly returns to superhero work, his deception pulls the whole family into a far larger threat.</p></div>
       </div>
       <div class="spine-row s6">
         <div class="spine-stage"><span class="spine-stage-num">Stage 6</span><span class="spine-stage-label">"Until finally…"</span></div>
-        <div class="spine-content">
-          <p class="spine-prompt">A new equilibrium is established — not the same as before, but earned. <span class="ph">[The resolution feels inevitable because of the chain that preceded it.]</span></p>
-          <p class="spine-eg"><em>Inside Out:</em> Riley tells her parents how she truly feels — arriving not at happiness, but at a richer emotional world.</p>
-        </div>
+        <div class="spine-content"><p class="spine-prompt">A new equilibrium is established — not the same as before, but earned. <span class="ph">[The resolution feels inevitable because of the chain that preceded it.]</span></p><p class="spine-eg"><em>Inside Out:</em> Riley tells her parents how she truly feels — arriving not at happiness, but at a richer emotional world.</p></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Templates CTA — always visible, outside collapsible system -->
+<!-- Templates CTA — always visible -->
 <div class="cta-band">
   <div class="cta-inner">
     <div>
@@ -298,9 +267,27 @@
 </footer>
 
 <script>
-function toggle(id){const el=document.getElementById(id);el.classList.toggle('open');}
+/* ── Collapsible ── */
+function toggle(id){document.getElementById(id).classList.toggle('open');}
 function expandAll(){document.querySelectorAll('.collapsible').forEach(el=>el.classList.add('open'));}
 function collapseAll(){document.querySelectorAll('.collapsible').forEach(el=>el.classList.remove('open'));}
+
+/* ── Theme ── */
+const themes = ['auto','light','dark'];
+const labels = {auto:'Auto', light:'☀ Light', dark:'☾ Dark'};
+function getTheme(){ return localStorage.getItem('theme')||'auto'; }
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  const btn = document.getElementById('theme-btn');
+  if(btn) btn.textContent = labels[t];
+  localStorage.setItem('theme',t);
+}
+function cycleTheme(){
+  const cur = getTheme();
+  const next = themes[(themes.indexOf(cur)+1)%themes.length];
+  applyTheme(next);
+}
+applyTheme(getTheme());
 </script>
 </body>
 </html>
