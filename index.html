@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pixar Story Spine — Interactive Narrative Arc</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --bg2: #f7f6f3;
+      --bg3: #f0ede8;
+      --text: #1a1a18;
+      --text2: #5a5a56;
+      --text3: #9a9994;
+      --border: rgba(0,0,0,0.12);
+      --border2: rgba(0,0,0,0.22);
+      --radius: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1c1c1a;
+        --bg2: #242422;
+        --bg3: #2c2c2a;
+        --text: #e8e6e0;
+        --text2: #9a9890;
+        --text3: #5a5a56;
+        --border: rgba(255,255,255,0.10);
+        --border2: rgba(255,255,255,0.20);
+      }
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    header {
+      padding: 3rem 2rem 2rem;
+      text-align: center;
+      border-bottom: 0.5px solid var(--border);
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    header h1 {
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 0.6rem;
+    }
+
+    header p {
+      font-size: 1rem;
+      color: var(--text2);
+      line-height: 1.6;
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    /* Arc SVG container */
+    #arc-wrap {
+      width: 100%;
+      margin: 0 0 0.75rem;
+    }
+
+    #hint {
+      font-size: 0.8rem;
+      color: var(--text3);
+      text-align: center;
+      margin: 0 0 1.25rem;
+    }
+
+    /* Info panel */
+    #panel {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      display: none;
+      animation: fadeIn .18s ease;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+    #panel-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--text3);
+      margin-bottom: 4px;
+    }
+
+    #panel-title {
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    #panel-body {
+      font-size: 0.9rem;
+      color: var(--text2);
+      line-height: 1.7;
+      margin-bottom: 0.9rem;
+    }
+
+    #panel-example {
+      font-size: 0.85rem;
+      color: var(--text2);
+      background: var(--bg2);
+      border-left: 2.5px solid var(--border2);
+      padding: 0.65rem 1rem;
+      border-radius: 0 8px 8px 0;
+      line-height: 1.65;
+    }
+
+    #panel-example em {
+      font-style: italic;
+      color: var(--text);
+    }
+
+    /* Nav dots */
+    #dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 1.5rem 0 0;
+    }
+
+    .dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border2);
+      background: var(--bg);
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .15s;
+    }
+
+    .dot:hover { background: var(--bg2); }
+    .dot.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+    /* SVG node hover */
+    .arc-node { cursor: pointer; }
+    .arc-node circle { transition: stroke-width .15s, fill .15s; }
+    .arc-node:hover circle { stroke-width: 2.5px !important; }
+
+    /* Reference section */
+    .ref-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      margin-top: 2.5rem;
+    }
+
+    .ref-card {
+      background: var(--bg2);
+      border: 0.5px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+      cursor: pointer;
+      transition: background .15s;
+    }
+
+    .ref-card:hover { background: var(--bg3); }
+
+    .ref-card-num {
+      font-size: 11px;
+      color: var(--text3);
+      margin-bottom: 4px;
+    }
+
+    .ref-card-title {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .ref-card-prompt {
+      font-size: 0.8rem;
+      color: var(--text2);
+      line-height: 1.5;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.78rem;
+      color: var(--text3);
+      border-top: 0.5px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Pixar Story Spine</h1>
+  <p>An interactive guide to the six-stage narrative structure used in Pixar's storytelling. Click any stage on the arc to explore its role.</p>
+</header>
+
+<main>
+  <div id="arc-wrap">
+    <svg width="100%" viewBox="0 0 680 300" role="img" xmlns="http://www.w3.org/2000/svg">
+      <title>Pixar Story Spine narrative arc</title>
+      <desc>Six interactive stages plotted on a narrative tension arc, from Once upon a time to Until finally.</desc>
+
+      <!-- Axes -->
+      <line x1="44" y1="44" x2="44" y2="258" stroke="var(--border)" stroke-width="0.5"/>
+      <line x1="44" y1="258" x2="644" y2="258" stroke="var(--border)" stroke-width="0.5"/>
+
+      <!-- Axis labels -->
+      <text x="22" y="258" font-size="10" fill="var(--text3)" font-family="var(--font)" text-anchor="middle">Low</text>
+      <text x="22" y="60"  font-size="10" fill="var(--text3)" font-family="var(--font)" text-anchor="middle">High</text>
+      <text x="14" y="160" font-size="10" fill="var(--text3)" font-family="var(--font)" text-anchor="middle" transform="rotate(-90,14,160)">tension</text>
+      <text x="344" y="276" font-size="10" fill="var(--text3)" font-family="var(--font)" text-anchor="middle">narrative progression →</text>
+
+      <!-- Arc path -->
+      <path d="M70 236 C 148 236, 196 82, 258 82 C 314 82, 352 108, 396 140 C 440 172, 475 192, 528 105 C 555 64, 578 50, 618 52"
+        fill="none" stroke="var(--border2)" stroke-width="1.5" stroke-dasharray="6 3"/>
+
+      <!-- Stage 1 -->
+      <g class="arc-node" id="sn1" onclick="selectStage(1)">
+        <circle cx="70" cy="236" r="28" fill="var(--bg)" stroke="#534AB7" stroke-width="1.5"/>
+        <text x="70" y="231" text-anchor="middle" font-size="9.5" font-weight="500" font-family="var(--font)" fill="#534AB7">Once upon</text>
+        <text x="70" y="244" text-anchor="middle" font-size="9.5" font-weight="500" font-family="var(--font)" fill="#534AB7">a time…</text>
+      </g>
+
+      <!-- Stage 2 -->
+      <g class="arc-node" id="sn2" onclick="selectStage(2)">
+        <circle cx="180" cy="178" r="28" fill="var(--bg)" stroke="#0F6E56" stroke-width="1.5"/>
+        <text x="180" y="174" text-anchor="middle" font-size="9.5" font-weight="500" font-family="var(--font)" fill="#0F6E56">Every</text>
+        <text x="180" y="187" text-anchor="middle" font-size="9.5" font-weight="500" font-family="var(--font)" fill="#0F6E56">day…</text>
+      </g>
+
+      <!-- Stage 3 -->
+      <g class="arc-node" id="sn3" onclick="selectStage(3)">
+        <circle cx="270" cy="82" r="28" fill="var(--bg)" stroke="#993C1D" stroke-width="1.5"/>
+        <text x="270" y="78" text-anchor="middle" font-size="9.5" font-weight="500" font-family="var(--font)" fill="#993C1D">Until one</text>
+        <text x="270" y="91" text-anchor="middle" font-size="9.5" font-weight="500" font-family="var(--font)" fill="#993C1D">day…</text>
+      </g>
+
+      <!-- Stage 4 -->
+      <g class="arc-node" id="sn4" onclick="selectStage(4)">
+        <circle cx="390" cy="140" r="28" fill="var(--bg)" stroke="#BA7517" stroke-width="1.5"/>
+        <text x="390" y="136" text-anchor="middle" font-size="9.5" font-weight="500" font-family="var(--font)" fill="#BA7517">Because</text>
+        <text x="390" y="149" text-anchor="middle" font-size="9.5" font-weight="500" font-family="var(--font)" fill="#BA7517">of that…</text>
+      </g>
+
+      <!-- Stage 5 -->
+      <g class="arc-node" id="sn5" onclick="selectStage(5)">
+        <circle cx="492" cy="148" r="28" fill="var(--bg)" stroke="#185FA5" stroke-width="1.5"/>
+        <text x="492" y="144" text-anchor="middle" font-size="9.5" font-weight="500" font-family="var(--font)" fill="#185FA5">Because</text>
+        <text x="492" y="157" text-anchor="middle" font-size="9.5" font-weight="500" font-family="var(--font)" fill="#185FA5">of that…</text>
+      </g>
+
+      <!-- Stage 6 -->
+      <g class="arc-node" id="sn6" onclick="selectStage(6)">
+        <circle cx="618" cy="52" r="28" fill="var(--bg)" stroke="#534AB7" stroke-width="1.5"/>
+        <text x="618" y="48" text-anchor="middle" font-size="9.5" font-weight="500" font-family="var(--font)" fill="#534AB7">Until</text>
+        <text x="618" y="61" text-anchor="middle" font-size="9.5" font-weight="500" font-family="var(--font)" fill="#534AB7">finally…</text>
+      </g>
+    </svg>
+  </div>
+
+  <p id="hint">Click any stage on the arc to explore its role in the story</p>
+
+  <div id="panel">
+    <p id="panel-label"></p>
+    <p id="panel-title"></p>
+    <p id="panel-body"></p>
+    <p id="panel-example"></p>
+  </div>
+
+  <div id="dots">
+    <div class="dot" id="d1" onclick="selectStage(1)">1</div>
+    <div class="dot" id="d2" onclick="selectStage(2)">2</div>
+    <div class="dot" id="d3" onclick="selectStage(3)">3</div>
+    <div class="dot" id="d4" onclick="selectStage(4)">4</div>
+    <div class="dot" id="d5" onclick="selectStage(5)">5</div>
+    <div class="dot" id="d6" onclick="selectStage(6)">6</div>
+  </div>
+
+  <div class="ref-grid">
+    <div class="ref-card" onclick="selectStage(1)">
+      <p class="ref-card-num">Stage 1</p>
+      <p class="ref-card-title">"Once upon a time…"</p>
+      <p class="ref-card-prompt">Establish who, where, and when</p>
+    </div>
+    <div class="ref-card" onclick="selectStage(2)">
+      <p class="ref-card-num">Stage 2</p>
+      <p class="ref-card-title">"Every day…"</p>
+      <p class="ref-card-prompt">Show the normal routine</p>
+    </div>
+    <div class="ref-card" onclick="selectStage(3)">
+      <p class="ref-card-num">Stage 3</p>
+      <p class="ref-card-title">"Until one day…"</p>
+      <p class="ref-card-prompt">The inciting incident</p>
+    </div>
+    <div class="ref-card" onclick="selectStage(4)">
+      <p class="ref-card-num">Stage 4</p>
+      <p class="ref-card-title">"Because of that…"</p>
+      <p class="ref-card-prompt">Cause and consequence</p>
+    </div>
+    <div class="ref-card" onclick="selectStage(5)">
+      <p class="ref-card-num">Stage 5</p>
+      <p class="ref-card-title">"Because of that…"</p>
+      <p class="ref-card-prompt">Stakes escalate</p>
+    </div>
+    <div class="ref-card" onclick="selectStage(6)">
+      <p class="ref-card-num">Stage 6</p>
+      <p class="ref-card-title">"Until finally…"</p>
+      <p class="ref-card-prompt">Resolution and new equilibrium</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  Pixar Story Spine — based on the storytelling framework popularised by Emma Coats and Pixar Animation Studios
+</footer>
+
+<script>
+const stages = {
+  1: {
+    label: "Stage 1 — Establish the world",
+    title: '"Once upon a time there was…"',
+    body: "This is the anchor. Introduce who the story is about, where they are, and when. This is not scene-setting for decoration — it gives readers a stable baseline so that everything disrupted later has real weight. Without it, the inciting incident has nothing to push against.",
+    example: "<em>Finding Nemo:</em> Marlin is an anxious clownfish living safely in a sea anemone with his son Nemo. The peaceful routine of reef life is well established before a single thing goes wrong.",
+    color: "#534AB7"
+  },
+  2: {
+    label: "Stage 2 — The normal world",
+    title: '"Every day…"',
+    body: "Show the character's ordinary life in motion. This stage matters because the audience needs to understand the routine that is about to be shattered. The more clearly the normal is drawn, the more powerful the disruption feels. It also reveals character — what a person does every day tells us who they are.",
+    example: "<em>WALL-E:</em> Every day, WALL-E methodically compacts trash on an abandoned Earth, returning home each night alone. His small rituals — treasured objects, a tape of Hello Dolly — paint a vivid picture of solitude before EVE arrives.",
+    color: "#0F6E56"
+  },
+  3: {
+    label: "Stage 3 — The inciting incident",
+    title: '"Until one day…"',
+    body: "Something breaks the pattern. This is the inciting incident — the hinge on which the entire story turns. It does not need to be spectacular; it needs to be disruptive. It forces the character out of their comfort zone and into action. Nothing in the story can happen without this moment.",
+    example: "<em>Up:</em> Carl receives an order to leave his home and move to a retirement community. One seemingly ordinary bureaucratic notice becomes the trigger that sends an elderly widower floating away on a house full of balloons.",
+    color: "#993C1D"
+  },
+  4: {
+    label: "Stage 4 — Cause and consequence",
+    title: '"Because of that…"',
+    body: "The character responds to the disruption — and their response creates new problems. This is the causal engine of the Pixar structure. Events do not just happen; they happen because of what came before. This stage is where most writing fails, skipping from problem to resolution without showing the chain of logic connecting them.",
+    example: "<em>Toy Story:</em> Because Buzz lands in Andy's room and becomes the favourite toy, Woody grows jealous. That jealousy leads directly to the accident that sends both toys spiralling into danger.",
+    color: "#BA7517"
+  },
+  5: {
+    label: "Stage 5 — Consequences compound",
+    title: '"Because of that…" (again)',
+    body: "The stakes escalate. A second wave of cause and effect pushes the story toward its crisis point. Longer stories may need several of these stages. Shorter ones may need only one. The principle remains the same: every development must follow from what came before. The character is now deeper in trouble than at the start.",
+    example: "<em>The Incredibles:</em> Because Bob secretly returns to superhero work, his family discovers his deception — which pulls them into a far larger threat than he ever faced alone. Each choice creates a bigger problem.",
+    color: "#185FA5"
+  },
+  6: {
+    label: "Stage 6 — Resolution",
+    title: '"Until finally…"',
+    body: "The story resolves. A new equilibrium is established — not necessarily the same as the original, but one that feels earned because the chain of cause and consequence made it inevitable. The character has changed. What they learned in the middle is what allows them to succeed at the end.",
+    example: "<em>Inside Out:</em> Riley finally breaks down and tells her parents how she truly feels. The resolution is not a return to happiness — it is the arrival of a richer, more complex emotional world, earned through everything Joy and Sadness discovered together.",
+    color: "#534AB7"
+  }
+};
+
+let active = null;
+
+function selectStage(n) {
+  if (active === n) { clearStage(); return; }
+  active = n;
+
+  // Reset all circles
+  for (let i = 1; i <= 6; i++) {
+    const g = document.getElementById('sn' + i);
+    g.querySelector('circle').style.strokeWidth = '1.5px';
+    g.querySelector('circle').style.fill = 'var(--bg)';
+    document.getElementById('d' + i).classList.remove('active');
+    document.getElementById('d' + i).style.borderColor = '';
+    document.getElementById('d' + i).style.background = '';
+    document.getElementById('d' + i).style.color = '';
+  }
+
+  // Highlight selected
+  const g = document.getElementById('sn' + n);
+  const circle = g.querySelector('circle');
+  circle.style.strokeWidth = '3px';
+  circle.style.fill = stages[n].color + '18';
+
+  const dot = document.getElementById('d' + n);
+  dot.classList.add('active');
+  dot.style.background = stages[n].color;
+  dot.style.borderColor = stages[n].color;
+  dot.style.color = '#fff';
+
+  const s = stages[n];
+  document.getElementById('panel-label').textContent = s.label;
+  document.getElementById('panel-title').textContent = s.title;
+  document.getElementById('panel-body').textContent = s.body;
+  document.getElementById('panel-example').innerHTML = s.example;
+  document.getElementById('panel').style.display = 'block';
+  document.getElementById('hint').style.display = 'none';
+}
+
+function clearStage() {
+  active = null;
+  for (let i = 1; i <= 6; i++) {
+    const g = document.getElementById('sn' + i);
+    g.querySelector('circle').style.strokeWidth = '1.5px';
+    g.querySelector('circle').style.fill = 'var(--bg)';
+    document.getElementById('d' + i).classList.remove('active');
+    document.getElementById('d' + i).style.background = '';
+    document.getElementById('d' + i).style.borderColor = '';
+    document.getElementById('d' + i).style.color = '';
+  }
+  document.getElementById('panel').style.display = 'none';
+  document.getElementById('hint').style.display = 'block';
+}
+</script>
+</body>
+</html>
