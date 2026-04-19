@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2-Minute Demo Templates — Pixar Storytelling</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1714;
+      --ink2: #5a5550;
+      --ink3: #9a9590;
+      --paper: #faf8f5;
+      --paper2: #f2efe9;
+      --paper3: #e8e4dc;
+      --rule: rgba(0,0,0,0.08);
+      --rule2: rgba(0,0,0,0.15);
+      --accent1: #c0392b;
+      --accent2: #2c6e49;
+      --accent3: #1a4a7a;
+      --radius: 3px;
+      --serif: 'Lora', Georgia, serif;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    /* ── Nav back link ── */
+    .back-nav {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem 0;
+    }
+    .back-nav a {
+      font-size: 0.78rem;
+      color: var(--ink3);
+      text-decoration: none;
+      letter-spacing: .04em;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: color .15s;
+    }
+    .back-nav a:hover { color: var(--ink2); }
+
+    /* ── Header ── */
+    header {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 0;
+      border-bottom: 0.5px solid var(--rule2);
+      padding-bottom: 2rem;
+    }
+    .header-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 0.6rem;
+    }
+    header h1 {
+      font-family: var(--serif);
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+    .header-intro {
+      font-size: 0.9rem;
+      color: var(--ink2);
+      line-height: 1.75;
+      max-width: 600px;
+    }
+    .header-intro a {
+      color: var(--ink);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .header-intro a:hover { color: var(--accent1); }
+
+    /* ── Tab strip ── */
+    .tab-strip {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      gap: 0;
+      border-bottom: 0.5px solid var(--rule2);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .tab-strip::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      padding: 1rem 1.4rem;
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--ink3);
+      cursor: pointer;
+      border: none;
+      background: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -0.5px;
+      white-space: nowrap;
+      transition: color .15s, border-color .15s;
+      letter-spacing: .01em;
+    }
+    .tab-btn:hover { color: var(--ink2); }
+    .tab-btn.active { color: var(--ink); border-bottom-color: var(--ink); }
+
+    /* ── Main layout ── */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+    }
+
+    .tab-panel { display: none; padding-top: 2.5rem; }
+    .tab-panel.active { display: block; }
+
+    /* ── Framework intro block ── */
+    .framework-intro {
+      display: grid;
+      grid-template-columns: 1fr 220px;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 0.5px solid var(--rule);
+    }
+    @media(max-width:600px){ .framework-intro { grid-template-columns: 1fr; } }
+
+    .framework-intro h2 {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 0.6rem;
+    }
+    .framework-intro p {
+      font-size: 0.88rem;
+      color: var(--ink2);
+      line-height: 1.75;
+      margin-bottom: 0.5rem;
+    }
+    .framework-intro a {
+      font-size: 0.8rem;
+      color: var(--ink3);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .framework-intro a:hover { color: var(--ink); }
+
+    .origin-card {
+      background: var(--paper2);
+      border: 0.5px solid var(--rule2);
+      border-radius: var(--radius);
+      padding: 1rem 1.1rem;
+      font-size: 0.78rem;
+      color: var(--ink2);
+      line-height: 1.65;
+      height: fit-content;
+    }
+    .origin-card strong {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 0.4rem;
+    }
+    .origin-card a { color: var(--ink2); text-decoration: underline; text-underline-offset: 2px; }
+    .origin-card a:hover { color: var(--ink); }
+
+    /* ── Template sections ── */
+    .template-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 0.75rem;
+    }
+    .section-tag {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+    .tag-problem  { background: #fdecea; color: var(--accent1); }
+    .tag-solution { background: #e8f4ee; color: var(--accent2); }
+    .tag-features { background: #e8eef6; color: var(--accent3); }
+    .tag-outcome  { background: var(--paper3); color: var(--ink2); }
+    .tag-attention{ background: #fdf3e3; color: #8a5c00; }
+    .tag-interest { background: #fdecea; color: var(--accent1); }
+    .tag-desire   { background: #e8eef6; color: var(--accent3); }
+    .tag-action   { background: #e8f4ee; color: var(--accent2); }
+    .tag-stage    { background: var(--paper3); color: var(--ink2); }
+
+    .section-note {
+      font-size: 0.75rem;
+      color: var(--ink3);
+      font-style: italic;
+    }
+
+    .template-block {
+      background: var(--paper);
+      border: 0.5px solid var(--rule2);
+      border-left: 3px solid var(--rule2);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.1rem 1.25rem;
+      font-size: 0.88rem;
+      color: var(--ink2);
+      line-height: 1.8;
+    }
+    .template-block.problem  { border-left-color: var(--accent1); }
+    .template-block.solution { border-left-color: var(--accent2); }
+    .template-block.features { border-left-color: var(--accent3); }
+    .template-block.outcome  { border-left-color: var(--paper3); }
+    .template-block.attention{ border-left-color: #d4890a; }
+    .template-block.interest { border-left-color: var(--accent1); }
+    .template-block.desire   { border-left-color: var(--accent3); }
+    .template-block.action   { border-left-color: var(--accent2); }
+
+    .template-block .placeholder {
+      font-family: var(--serif);
+      font-style: italic;
+      color: var(--ink);
+      background: var(--paper2);
+      border-radius: 2px;
+      padding: 0 3px;
+    }
+
+    .template-block .example-note {
+      display: block;
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 0.5px solid var(--rule);
+      font-size: 0.8rem;
+      color: var(--ink3);
+      font-style: italic;
+    }
+
+    .stage-connector {
+      text-align: center;
+      padding: 0.4rem 0;
+      font-size: 0.75rem;
+      color: var(--ink3);
+      letter-spacing: .05em;
+    }
+
+    /* ── Tips box ── */
+    .tips-box {
+      margin-top: 2.5rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--paper2);
+      border: 0.5px solid var(--rule2);
+      border-radius: var(--radius);
+    }
+    .tips-box h3 {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 0.75rem;
+    }
+    .tips-box ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .tips-box li {
+      font-size: 0.82rem;
+      color: var(--ink2);
+      line-height: 1.6;
+      padding-left: 1rem;
+      position: relative;
+    }
+    .tips-box li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--ink3);
+    }
+
+    /* ── Footer ── */
+    footer {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2rem;
+      font-size: 0.75rem;
+      color: var(--ink3);
+      border-top: 0.5px solid var(--rule);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="back-nav">
+  <a href="index.html">← Back to Pixar Storytelling</a>
+</div>
+
+<header>
+  <p class="header-eyebrow">Student Activity</p>
+  <h1>2-Minute Product Demo Templates</h1>
+  <p class="header-intro">
+    Three narrative frameworks for structuring a short product walkthrough. Each gives you a different starting point — choose the one that best matches your app, your audience, and how you naturally tell a story. These templates prepare you for the fuller 5–7 minute lifecycle presentation.
+  </p>
+</header>
+
+<div class="tab-strip">
+  <button class="tab-btn active" onclick="switchTab('ps')">Problem-Solution</button>
+  <button class="tab-btn" onclick="switchTab('spine')">Pixar Story Spine Adapted</button>
+  <button class="tab-btn" onclick="switchTab('aida')">AIDA</button>
+</div>
+
+<main>
+
+  <!-- ═══ TAB 1: Problem-Solution ═══ -->
+  <div class="tab-panel active" id="tab-ps">
+    <div class="framework-intro">
+      <div>
+        <h2>Problem-Solution Framework</h2>
+        <p>A direct, product-first structure that moves from user context to features to outcome. It works well when your audience is unfamiliar with the problem space and needs to understand who the user is before they can appreciate what the app does.</p>
+        <p>This approach is common in product management and startup pitching, where clarity and efficiency matter more than narrative arc. It is the most transferable framework across different audiences and presentation contexts.</p>
+      </div>
+      <div class="origin-card">
+        <strong>Origin</strong>
+        This structure draws from standard product management pitch conventions, closely related to the value proposition canvas developed by Alexander Osterwalder. Learn more at <a href="https://www.strategyzer.com/library/the-value-proposition-canvas" target="_blank">strategyzer.com</a>.
+      </div>
+    </div>
+
+    <div class="template-section">
+      <div class="section-label">
+        <span class="section-tag tag-problem">Opening</span>
+      </div>
+      <div class="template-block problem">
+        Today I want to introduce <span class="placeholder">[Product Name]</span>.
+      </div>
+    </div>
+
+    <div class="template-section">
+      <div class="section-label">
+        <span class="section-tag tag-problem">User &amp; Problem</span>
+      </div>
+      <div class="template-block problem">
+        Our primary user is <span class="placeholder">[target persona]</span>, someone who <span class="placeholder">[brief user context]</span>. Their biggest challenge is <span class="placeholder">[main pain point]</span>. Right now they have to <span class="placeholder">[current frustrating process]</span>, which leads to <span class="placeholder">[negative outcome]</span>.
+      </div>
+    </div>
+
+    <div class="template-section">
+      <div class="section-label">
+        <span class="section-tag tag-solution">Value Proposition</span>
+      </div>
+      <div class="template-block solution">
+        That is where <span class="placeholder">[Product Name]</span> comes in. Our unique value proposition is: <span class="placeholder">[one sentence describing how the app solves the problem better or faster]</span>.
+      </div>
+    </div>
+
+    <div class="template-section">
+      <div class="section-label">
+        <span class="section-tag tag-features">Features</span>
+      </div>
+      <div class="template-block features">
+        When users open the app, they first <span class="placeholder">[first key interaction]</span>, which helps them <span class="placeholder">[benefit]</span>. Next, they can use <span class="placeholder">[Feature 1]</span> to <span class="placeholder">[benefit]</span>. They can also use <span class="placeholder">[Feature 2]</span> to <span class="placeholder">[benefit]</span>. Finally, <span class="placeholder">[Feature 3]</span> brings everything together in <span class="placeholder">[dashboard, summary page, etc.]</span>.
+      </div>
+    </div>
+
+    <div class="template-section">
+      <div class="section-label">
+        <span class="section-tag tag-outcome">Outcome</span>
+      </div>
+      <div class="template-block outcome">
+        Before using the app, users struggled with <span class="placeholder">[old experience]</span>. After, they can <span class="placeholder">[improved experience]</span>. Ultimately, <span class="placeholder">[Product Name]</span> helps <span class="placeholder">[target persona]</span> achieve <span class="placeholder">[main outcome]</span>.
+      </div>
+    </div>
+
+    <div class="tips-box">
+      <h3>Delivery tips</h3>
+      <ul>
+        <li>Open with confidence — saying the product name clearly sets the tone for everything that follows.</li>
+        <li>Keep the user and problem section to two or three sentences maximum. This is not the main event.</li>
+        <li>The features section is where most presenters rush. Slow down and name the benefit after each feature, not just the feature itself.</li>
+        <li>End on the outcome, not on a feature. The last thing the audience hears should be about the user, not the app.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══ TAB 2: Pixar Story Spine Adapted ═══ -->
+  <div class="tab-panel" id="tab-spine">
+    <div class="framework-intro">
+      <div>
+        <h2>Pixar Story Spine Adapted</h2>
+        <p>A narrative framework that opens with the user's world before introducing the product. By grounding the audience in who the user is and what their daily struggle looks like, it creates emotional investment that makes the product reveal feel earned rather than announced.</p>
+        <p>This is an adaptation of the Story Spine structure used by Pixar story artists, applied here to a product context. The six stages map directly to the fuller framework you will use in your final lifecycle presentation, making this a useful rehearsal for that longer format.</p>
+        <a href="index.html">Learn more about the full Story Spine framework →</a>
+      </div>
+      <div class="origin-card">
+        <strong>Origin</strong>
+        The Story Spine was developed by improv teacher Kenn Adams and popularised in storytelling circles by Pixar story artist Emma Coats. Learn more at <a href="https://www.aerogrammestudio.com/2013/03/07/pixars-22-rules-of-storytelling/" target="_blank">aerogrammestudio.com</a>.
+      </div>
+    </div>
+
+    <div class="template-section">
+      <div class="section-label">
+        <span class="section-tag tag-stage">Stage 1 — Once upon a time</span>
+      </div>
+      <div class="template-block problem">
+        Once upon a time, there was <span class="placeholder">[target persona]</span>, someone who <span class="placeholder">[brief description of lifestyle, goals, or situation]</span>.
+      </div>
+    </div>
+
+    <div class="stage-connector">↓</div>
+
+    <div class="template-section">
+      <div class="section-label">
+        <span class="section-tag tag-stage">Stage 2 — Every day</span>
+      </div>
+      <div class="template-block problem">
+        Every day, they struggled with <span class="placeholder">[main pain point]</span>. They often had to <span class="placeholder">[current frustrating process]</span>, which led to <span class="placeholder">[negative outcome]</span>.
+      </div>
+    </div>
+
+    <div class="stage-connector">↓</div>
+
+    <div class="template-section">
+      <div class="section-label">
+        <span class="section-tag tag-stage">Stage 3 — Until one day</span>
+      </div>
+      <div class="template-block solution">
+        Then one day, they found <span class="placeholder">[Product Name]</span>. The unique value proposition is: <span class="placeholder">[one sentence explaining how the app solves the problem better or faster than alternatives]</span>.
+      </div>
+    </div>
+
+    <div class="stage-connector">↓</div>
+
+    <div class="template-section">
+      <div class="section-label">
+        <span class="section-tag tag-stage">Stage 4 — Because of that</span>
+      </div>
+      <div class="template-block features">
+        When they opened the app, they first <span class="placeholder">[first key interaction]</span>, which gave them <span class="placeholder">[immediate benefit]</span>. They could use <span class="placeholder">[Feature 1]</span> to <span class="placeholder">[benefit]</span>, and <span class="placeholder">[Feature 2]</span> to <span class="placeholder">[benefit]</span>.
+      </div>
+    </div>
+
+    <div class="stage-connector">↓</div>
+
+    <div class="template-section">
+      <div class="section-label">
+        <span class="section-tag tag-stage">Stage 5 — Because of that</span>
+      </div>
+      <div class="template-block features">
+        Finally, <span class="placeholder">[Feature 3]</span> brought everything together in <span class="placeholder">[dashboard, itinerary, summary page, etc.]</span>, which meant they no longer had to <span class="placeholder">[old frustrating process]</span>.
+      </div>
+    </div>
+
+    <div class="stage-connector">↓</div>
+
+    <div class="template-section">
+      <div class="section-label">
+        <span class="section-tag tag-stage">Stage 6 — Until finally</span>
+      </div>
+      <div class="template-block outcome">
+        <span class="placeholder">[Product Name]</span> helped <span class="placeholder">[target persona]</span> achieve <span class="placeholder">[main transformation or outcome]</span>. What used to take <span class="placeholder">[old experience]</span> now became <span class="placeholder">[better experience]</span>.
+      </div>
+    </div>
+
+    <div class="tips-box">
+      <h3>Delivery tips</h3>
+      <ul>
+        <li>The stage labels are for preparation only — do not read them aloud. The transitions should feel natural, not structured.</li>
+        <li>Stages 1 and 2 set up the emotional stakes. Do not rush them to get to the product — that tension is what makes Stage 3 land.</li>
+        <li>Stay in third person throughout. You are telling the user's story, not pitching your product.</li>
+        <li>Notice how this structure maps to the full Story Spine framework. In your final presentation, each of these stages will expand into a longer section.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══ TAB 3: AIDA ═══ -->
+  <div class="tab-panel" id="tab-aida">
+    <div class="framework-intro">
+      <div>
+        <h2>AIDA Framework</h2>
+        <p>A persuasion-first structure drawn from marketing and advertising. It opens with a hook designed to capture attention before establishing the user context, then moves to the product and features, and closes with a clear call to action or outcome statement.</p>
+        <p>AIDA works best when your audience may not already care about the problem you are solving. The Attention stage earns you the right to be heard before you say anything about your app. It is the most audience-aware of the three frameworks.</p>
+      </div>
+      <div class="origin-card">
+        <strong>Origin</strong>
+        AIDA — Attention, Interest, Desire, Action — was first formulated by advertising pioneer Elias St. Elmo Lewis in the late 1800s and remains one of the most widely used frameworks in marketing communications. Learn more at <a href="https://en.wikipedia.org/wiki/AIDA_(marketing)" target="_blank">wikipedia.org</a>.
+      </div>
+    </div>
+
+    <div class="template-section">
+      <div class="section-label">
+        <span class="section-tag tag-attention">Attention</span>
+        <span class="section-note">Start with a hook — a surprising fact, a question, or a pain point stated as a feeling.</span>
+      </div>
+      <div class="template-block attention">
+        <span class="placeholder">[Strong opening statement, surprising fact, question, or emotionally framed pain point.]</span>
+        <span class="example-note">Example: "Planning a trip should be exciting, but for many people it becomes stressful because there are too many destinations, websites, and booking decisions."</span>
+      </div>
+    </div>
+
+    <div class="template-section">
+      <div class="section-label">
+        <span class="section-tag tag-interest">Interest</span>
+      </div>
+      <div class="template-block interest">
+        Our primary user is <span class="placeholder">[target persona]</span>, someone who <span class="placeholder">[brief user context]</span>. Their biggest challenge is <span class="placeholder">[main pain point]</span>. Right now they often have to <span class="placeholder">[current frustrating process]</span>, which leads to <span class="placeholder">[negative outcome]</span>.
+      </div>
+    </div>
+
+    <div class="template-section">
+      <div class="section-label">
+        <span class="section-tag tag-desire">Desire</span>
+      </div>
+      <div class="template-block desire">
+        That is why we created <span class="placeholder">[Product Name]</span>. Our unique value proposition is: <span class="placeholder">[one sentence describing how the app solves the problem better or faster]</span>.<br><br>
+        When users open the app, they first <span class="placeholder">[first key interaction]</span>. Next, they can use <span class="placeholder">[Feature 1]</span> to <span class="placeholder">[benefit]</span>. They can also use <span class="placeholder">[Feature 2]</span> to <span class="placeholder">[benefit]</span>. Finally, <span class="placeholder">[Feature 3]</span> brings everything together in <span class="placeholder">[dashboard, summary page, itinerary, etc.]</span>.
+      </div>
+    </div>
+
+    <div class="template-section">
+      <div class="section-label">
+        <span class="section-tag tag-action">Action</span>
+      </div>
+      <div class="template-block action">
+        Before using the app, users struggled with <span class="placeholder">[old experience]</span>. After using the app, they can <span class="placeholder">[improved experience]</span>. Ultimately, <span class="placeholder">[Product Name]</span> helps <span class="placeholder">[target persona]</span> achieve <span class="placeholder">[main outcome]</span>.
+      </div>
+    </div>
+
+    <div class="tips-box">
+      <h3>Delivery tips</h3>
+      <ul>
+        <li>The Attention hook is everything. If it lands flat, the rest of the presentation fights an uphill battle. Practise it more than any other line.</li>
+        <li>Name the emotion in the hook, not just the problem. "Stressful" lands better than "inefficient."</li>
+        <li>The Desire section is doing the most work. Give each feature a clear benefit — not just what it does but why it matters to the user.</li>
+        <li>End the Action section on the user's transformation, not on a product feature. Leave the audience thinking about the person, not the app.</li>
+      </ul>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Part of the Pixar Storytelling toolkit — Systems Analysis &amp; Design
+</footer>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    b.classList.toggle('active', (i===0&&id==='ps')||(i===1&&id==='spine')||(i===2&&id==='aida'));
+  });
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+}
+</script>
+</body>
+</html>
